@@ -83,6 +83,16 @@ export default function Home(props) {
     // mapView.renderLabels = false
     window.onresize = () => mapView.resize(window.innerWidth, window.innerHeight)
 
+    // Rotate
+    setTimeout(() => {
+      mapView.addEventListener(harp.MapViewEventNames.AfterRender, () => {
+        mapView.lookAt({
+          heading: mapView.heading + 0.02,
+        })
+        mapView.update()
+      })
+    }, 1000)
+
     const vectorTileDataSource = new harp.VectorTileDataSource({
       authenticationCode: '_ZQeCfAB3nJFJ4E7JJ7W-CwSSW3vvUh6032RY85_OVs',
     })
