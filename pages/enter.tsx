@@ -1,9 +1,9 @@
-import { auth, firestore, googleAuthProvider } from '../lib/firebase'
-import { UserContext } from '../lib/context'
+import { auth, firestore, googleAuthProvider } from '@lib/firebase'
+import { UserContext } from '@lib/context'
+import Metatags from '@components/Metatags'
 
 import { useEffect, useState, useCallback, useContext } from 'react'
 import debounce from 'lodash.debounce'
-import Metatags from '../components/Metatags'
 
 export default function Enter(props) {
   const { user, username } = useContext(UserContext)
@@ -26,9 +26,12 @@ function SignInButton() {
   }
 
   return (
-    <button className='btn-google' onClick={signInWithGoogle}>
-      <img src={'/google.png'} width='30px' /> Sign in with Google
-    </button>
+    <>
+      <button className='btn-google' onClick={signInWithGoogle}>
+        <img src={'/google.png'} width='30px' /> Sign in with Google
+      </button>
+      <button onClick={() => auth.signInAnonymously()}>Sign in Anonymously</button>
+    </>
   )
 }
 
