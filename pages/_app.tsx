@@ -1,4 +1,5 @@
-import '@styles/globals.css'
+// import '@styles/globals.css'
+import 'tailwindcss/tailwind.css'
 import Navbar from '@components/Navbar'
 import { UserContext } from '@lib/context'
 import { useUserData } from '@lib/hooks'
@@ -29,6 +30,7 @@ function MyApp({ Component, pageProps }) {
           left: 0,
           right: 0,
           bottom: 0,
+          zIndex: -1,
         }}
       ></canvas>
     </>
