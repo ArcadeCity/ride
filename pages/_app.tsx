@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
         <script src='https://unpkg.com/@here/harp.gl/dist/harp.js' defer></script>
       </Head>
       <UserContext.Provider value={userData}>
-        <Navbar />
+        {/* <Navbar /> */}
         <Component {...pageProps} />
         <Toaster />
       </UserContext.Provider>

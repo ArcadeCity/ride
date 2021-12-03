@@ -63,25 +63,24 @@ export default function Home(props) {
   useEffect(() => {
     const canvas = document.getElementById('map')
     if (!harp) return
-    console.log('harp:', harp)
     const mapView = new harp.MapView({
       canvas,
-      theme:
-        'https://unpkg.com/@here/harp-map-theme@latest/resources/berlin_tilezen_night_reduced.json',
+      theme: 'resources/arcade.json',
     })
 
-    // center the camera to New York
+    // center the camera to RJ
     mapView.lookAt({
-      target: new harp.GeoCoordinates(40.70398928, -74.01319808),
-      zoomLevel: 17,
+      target: new harp.GeoCoordinates(-22.931363110413354, -43.183705305311655),
+      zoomLevel: 18,
       tilt: 40,
     })
 
-    const mapControls = new harp.MapControls(mapView)
-    const ui = new harp.MapControlsUI(mapControls)
-    canvas.parentElement.appendChild(ui.domElement)
+    // const mapControls = new harp.MapControls(mapView)
+    // const ui = new harp.MapControlsUI(mapControls)
+    // canvas.parentElement.appendChild(ui.domElement)
 
     mapView.resize(window.innerWidth, window.innerHeight)
+    // mapView.renderLabels = false
     window.onresize = () => mapView.resize(window.innerWidth, window.innerHeight)
 
     const vectorTileDataSource = new harp.VectorTileDataSource({
