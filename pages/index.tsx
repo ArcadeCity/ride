@@ -2,32 +2,14 @@ import PostFeed from '@components/PostFeed'
 import Metatags from '@components/Metatags'
 import Loader from '@components/Loader'
 import { auth, firestore, fromMillis, postToJSON, twitterAuthProvider } from '@lib/firebase'
-
-import { useEffect, useState } from 'react'
-import AuthCheck from '@components/AuthCheck'
-
-// Max post to query per page
-const LIMIT = 10
-
-export async function getServerSideProps(context) {
-  const postsQuery = firestore
-    .collectionGroup('posts')
-    .where('published', '==', true)
-    .orderBy('createdAt', 'desc')
-    .limit(LIMIT)
-
-  const posts = (await postsQuery.get()).docs.map(postToJSON)
-
-  return {
-    props: { posts }, // will be passed to the page component as props
-  }
-}
+import { useCallback, useEffect, useState } from 'react'
+import { magic } from '@lib/magic'
 
 export default function Home(props) {
   const [posts, setPosts] = useState(props.posts)
   const [loading, setLoading] = useState(false)
-
   const [postsEnd, setPostsEnd] = useState(false)
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
 
   // Get next page in pagination query
   const getMorePosts = async () => {
@@ -100,16 +82,32 @@ export default function Home(props) {
     mapView.addDataSource(vectorTileDataSource)
   }, [harp])
 
-  const signInWithTwitter = async () => {
-    await auth.signInWithPopup(twitterAuthProvider)
-  }
+  const signInWithTwitter = useCallback(async (provider) => {
+    setIsLoggingIn(true)
+
+    try {
+      console.log('attempting')
+      await magic.oauth.loginWithRedirect({
+        provider,
+        redirectURI: new URL('/callback', window.location.origin).href,
+      })
+      console.log('did what')
+      // history.push("/");
+    } catch (e) {
+      console.log('failed:', e)
+      setIsLoggingIn(false)
+    }
+  }, [])
+
+  // const signInWithTwitter = async () => {
+  //   await auth.signInWithPopup(twitterAuthProvider)
+  // }
 
   return (
     <div
       className='flex h-screen w-screen justify-center items-center'
       style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
     >
-      <AuthCheck />
       <main className='mx-auto max-w-7xl px-4'>
         <div className='text-center'>
           <h1 className='text-4xl tracking-tight font-extrabold text-gray-100 sm:text-5xl md:text-6xl'>
@@ -123,7 +121,7 @@ export default function Home(props) {
               <a
                 href='#'
                 className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10'
-                onClick={signInWithTwitter}
+                onClick={() => signInWithTwitter('twitter')}
               >
                 Log in with Twitter
               </a>
@@ -171,4 +169,21 @@ export default function Home(props) {
       {postsEnd && 'You have reached the end!'}
     </main>
   )
+}
+
+// Max post to query per page
+const LIMIT = 10
+
+export async function getServerSideProps(context) {
+  const postsQuery = firestore
+    .collectionGroup('posts')
+    .where('published', '==', true)
+    .orderBy('createdAt', 'desc')
+    .limit(LIMIT)
+
+  const posts = (await postsQuery.get()).docs.map(postToJSON)
+
+  return {
+    props: { posts }, // will be passed to the page component as props
+  }
 }

@@ -18,7 +18,10 @@
     "react-firebase-hooks": "^2.2.0",
     "react-hook-form": "^6.14.2",
     "react-hot-toast": "^1.0.2",
-    "react-markdown": "^5.0.3"
+    "react-markdown": "^5.0.3",
+    "react-social-login-buttons": "^3.4.0",
+    "@magic-ext/oauth": "~0.7.0",
+    "magic-sdk": "^4.1.1"
   },
   "devDependencies": {
     "@types/react": "^17.0.37",
