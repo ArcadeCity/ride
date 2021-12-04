@@ -22,6 +22,8 @@ exports.auth = functions.https.onCall(async (data, context) => {
   const magic = new Magic(MAGICSECRET)
   const didToken = data.didToken
   const metadata = await magic.users.getMetadataByToken(didToken)
+  functions.logger.info('User metadata:', { metadata })
+  if (!metadata.email) return
   const email = metadata.email
   try {
     /* Get existing user by email address,
