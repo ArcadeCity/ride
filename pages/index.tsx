@@ -4,6 +4,7 @@ import Loader from '@components/Loader'
 import { auth, firestore, fromMillis, postToJSON, twitterAuthProvider } from '@lib/firebase'
 
 import { useEffect, useState } from 'react'
+import AuthCheck from '@components/AuthCheck'
 
 // Max post to query per page
 const LIMIT = 10
@@ -108,6 +109,7 @@ export default function Home(props) {
       className='flex h-screen w-screen justify-center items-center'
       style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
     >
+      <AuthCheck />
       <main className='mx-auto max-w-7xl px-4'>
         <div className='text-center'>
           <h1 className='text-4xl tracking-tight font-extrabold text-gray-100 sm:text-5xl md:text-6xl'>
