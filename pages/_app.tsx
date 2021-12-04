@@ -5,6 +5,7 @@ import { UserContext } from '@lib/context'
 import { useUserData } from '@lib/hooks'
 import { Toaster } from 'react-hot-toast'
 import Head from 'next/head'
+import ArcadeMap from '@components/mvp/ArcadeMap'
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData()
@@ -20,19 +21,7 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
         <Toaster />
       </UserContext.Provider>
-      <canvas
-        id='map'
-        style={{
-          position: 'fixed',
-          height: '100vh',
-          width: '100vw',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: -1,
-        }}
-      ></canvas>
+      <ArcadeMap />
     </>
   )
 }
