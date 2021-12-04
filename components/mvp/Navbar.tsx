@@ -4,6 +4,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { PlusSmIcon } from '@heroicons/react/solid'
 import { UserContext } from '@lib/context'
+import { useStore } from '@lib/store'
 
 const navigation = [
   // { name: 'Dashboard', href: '#', current: true },
@@ -23,6 +24,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const { user, username } = useContext(UserContext)
+  const twitterMetadata = useStore((s) => s.oauthdata)
   console.log(user)
   return (
     <Disclosure as='nav' className='bg-transparent'>
@@ -96,7 +98,11 @@ export default function Navbar() {
                     <div>
                       <Menu.Button className='bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
                         <span className='sr-only'>Open user menu</span>
-                        <img className='h-8 w-8 rounded-full' src={user?.photoURL ?? ''} alt='' />
+                        <img
+                          className='h-8 w-8 rounded-full'
+                          src={twitterMetadata?.profile ?? ''}
+                          alt=''
+                        />
                       </Menu.Button>
                     </div>
                     <Transition
@@ -154,7 +160,11 @@ export default function Navbar() {
             <div className='pt-4 pb-3 border-t border-gray-700'>
               <div className='flex items-center px-5 sm:px-6'>
                 <div className='flex-shrink-0'>
-                  <img className='h-10 w-10 rounded-full' src={user?.photoURL ?? ''} alt='' />
+                  <img
+                    className='h-10 w-10 rounded-full'
+                    src={twitterMetadata?.profile ?? ''}
+                    alt=''
+                  />
                 </div>
                 <div className='ml-3'>
                   <div className='text-base font-medium text-white'>{user?.name}</div>
