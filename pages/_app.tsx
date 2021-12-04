@@ -6,9 +6,12 @@ import { useUserData } from '@lib/hooks'
 import { Toaster } from 'react-hot-toast'
 import Head from 'next/head'
 import ArcadeMap from '@components/mvp/ArcadeMap'
+import { useStore } from '@lib/store'
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData()
+  const oauthdata = useStore((s) => s.oauthdata)
+  console.log('oauthdata:', oauthdata)
 
   return (
     <>
