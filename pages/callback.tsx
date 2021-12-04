@@ -12,7 +12,6 @@ export default function Callback() {
       magic.oauth
         .getRedirectResult()
         .then((object) => {
-          console.log('first, the object:', object)
           const info = {
             email: object.oauth.userInfo.email,
             emailVerified: object.oauth.userInfo.emailVerified,
@@ -23,11 +22,11 @@ export default function Callback() {
             sub: object.oauth.userInfo.sub,
           }
           setoauthdata(info)
-          console.log(object)
+          console.log('Oauth data saved:', info)
         })
         .finally(() => {
           console.log('Redirected from Magic, on to the homepage...')
-          // router.push('/')
+          router.push('/')
         })
     } catch (e) {
       console.log(e)

@@ -7,11 +7,15 @@ import { Toaster } from 'react-hot-toast'
 import Head from 'next/head'
 import ArcadeMap from '@components/mvp/ArcadeMap'
 import { useStore } from '@lib/store'
+import { useEffect } from 'react'
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData()
   const oauthdata = useStore((s) => s.oauthdata)
-  console.log('oauthdata:', oauthdata)
+
+  useEffect(() => {
+    console.log('oauthdata:', oauthdata)
+  }, [oauthdata])
 
   return (
     <>
