@@ -6,7 +6,7 @@ import { auth, functions } from '@lib/firebase'
 
 export default function HomePage() {
   const [userMetadata, setUserMetadata] = useState()
-  const [authed, setAuthed] = useState(true)
+  const [authed, setAuthed] = useState(false)
 
   useEffect(() => {
     console.log('userMetadata:', userMetadata)
