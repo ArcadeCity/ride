@@ -1,10 +1,13 @@
 import PostBox from '@components/mvp/PostBox'
+import { useState } from 'react'
+import Onboarding from './Onboarding'
 import Post from './Post'
 
 export default function Feed() {
+  const [onboarded, setOnboarded] = useState(true)
   return (
     <>
-      <PostBox />
+      {onboarded ? <PostBox /> : <Onboarding />}
       <div
         className='flow-root p-8 m-8 rounded-xl'
         style={{ backgroundColor: 'rgba(255,255,255,1)' }}
