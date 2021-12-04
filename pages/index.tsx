@@ -10,9 +10,9 @@ export default function HomePage() {
   const [authed, setAuthed] = useState(false)
   const twitterMetadata = useStore((s) => s.oauthdata)
 
-  useEffect(() => {
-    console.log('userMetadata:', userMetadata)
-  }, [userMetadata])
+  // useEffect(() => {
+  //   console.log('userMetadata:', userMetadata)
+  // }, [userMetadata])
 
   useEffect(() => {
     // On mount, we check if a user is logged in.
@@ -20,16 +20,16 @@ export default function HomePage() {
     magic.user.isLoggedIn().then(async (magicIsLoggedIn) => {
       if (magicIsLoggedIn) {
         magic.user.getMetadata().then(setUserMetadata)
-        console.log('Authing with Firebase...')
+        // console.log('Authing with Firebase...')
         const didToken = await magic.user.getIdToken()
-        console.log('didToken:', didToken)
+        // console.log('didToken:', didToken)
         const authFunc = functions.httpsCallable('auth')
         /* DID token is passed into the auth callable function */
         let result = (await authFunc({ didToken, twitterMetadata })).data
-        console.log('result:', result)
+        // console.log('result:', result)
         /* Firebase user access token is used to authenticate */
         const wat = await auth.signInWithCustomToken(result.token)
-        console.log('wat:', wat)
+        // console.log('wat:', wat)
         setAuthed(true)
       }
     })
