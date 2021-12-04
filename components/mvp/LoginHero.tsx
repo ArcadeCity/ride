@@ -1,4 +1,30 @@
+import PostFeed from '@components/PostFeed'
+import Metatags from '@components/Metatags'
+import Loader from '@components/Loader'
+import { auth, firestore, fromMillis, postToJSON, twitterAuthProvider } from '@lib/firebase'
+import { useCallback, useEffect, useState } from 'react'
+import { magic } from '@lib/magic'
+import { useRouter } from 'next/router'
+
 export default function LoginHero() {
+  const router = useRouter()
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
+  const signInWithTwitter = useCallback(async (provider) => {
+    setIsLoggingIn(true)
+
+    try {
+      console.log('attempting')
+      await magic.oauth.loginWithRedirect({
+        provider,
+        redirectURI: new URL('/callback', window.location.origin).href,
+      })
+      console.log('did what')
+      // history.push("/");
+    } catch (e) {
+      console.log('failed:', e)
+      setIsLoggingIn(false)
+    }
+  }, [])
   return (
     <main className='mx-auto max-w-7xl px-4'>
       <div className='text-center'>
