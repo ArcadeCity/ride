@@ -11,8 +11,9 @@ exports.auth = functions.https.onCall(async (data, context) => {
   const { Magic } = require('@magic-sdk/admin')
   const magic = new Magic(MAGICSECRET)
   const didToken = data.didToken
+  const twitterMetadata = data.twitterMetadata
   const metadata = await magic.users.getMetadataByToken(didToken)
-  functions.logger.info('User metadata:', { metadata })
+  functions.logger.info('User metadata incl Twitter:', { metadata, twitterMetadata })
   if (!metadata.email) return
   const email = metadata.email
   try {
