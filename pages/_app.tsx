@@ -1,6 +1,6 @@
 // import '@styles/globals.css'
 import 'tailwindcss/tailwind.css'
-import Navbar from '@components/Navbar'
+import Navbar from '@components/mvp/Navbar'
 import { UserContext } from '@lib/context'
 import { useUserData } from '@lib/hooks'
 import { Toaster } from 'react-hot-toast'
@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }) {
         <script src='https://unpkg.com/@here/harp.gl/dist/harp.js' defer></script>
       </Head>
       <UserContext.Provider value={userData}>
-        {/* <Navbar /> */}
+        <Navbar />
         <Component {...pageProps} />
         <Toaster />
       </UserContext.Provider>
