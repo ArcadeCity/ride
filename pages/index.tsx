@@ -1,7 +1,7 @@
 import PostFeed from '@components/PostFeed'
 import Metatags from '@components/Metatags'
 import Loader from '@components/Loader'
-import { firestore, fromMillis, postToJSON } from '@lib/firebase'
+import { auth, firestore, fromMillis, postToJSON, twitterAuthProvider } from '@lib/firebase'
 
 import { useEffect, useState } from 'react'
 
@@ -25,6 +25,8 @@ export async function getServerSideProps(context) {
 export default function Home(props) {
   const [posts, setPosts] = useState(props.posts)
   const [loading, setLoading] = useState(false)
+
+  console.log(posts)
 
   const [postsEnd, setPostsEnd] = useState(false)
 
@@ -99,6 +101,10 @@ export default function Home(props) {
     mapView.addDataSource(vectorTileDataSource)
   }, [harp])
 
+  const signInWithTwitter = async () => {
+    await auth.signInWithPopup(twitterAuthProvider)
+  }
+
   return (
     <div
       className='flex h-screen w-screen justify-center items-center'
@@ -117,6 +123,7 @@ export default function Home(props) {
               <a
                 href='#'
                 className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10'
+                onClick={signInWithTwitter}
               >
                 Log in with Twitter
               </a>

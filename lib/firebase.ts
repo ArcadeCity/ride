@@ -20,6 +20,7 @@ if (!firebase.apps.length) {
 // Auth exports
 export const auth = firebase.auth()
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
+export const twitterAuthProvider = new firebase.auth.TwitterAuthProvider()
 
 // Firestore exports
 export const firestore = firebase.firestore()
