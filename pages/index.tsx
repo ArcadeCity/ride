@@ -1,9 +1,10 @@
 import PostFeed from '@components/PostFeed'
 import Metatags from '@components/Metatags'
 import Loader from '@components/Loader'
-import { firestore, fromMillis, postToJSON } from '@lib/firebase'
+import { auth, firestore, fromMillis, postToJSON, twitterAuthProvider } from '@lib/firebase'
 
 import { useEffect, useState } from 'react'
+import AuthCheck from '@components/AuthCheck'
 
 // Max post to query per page
 const LIMIT = 10
@@ -99,11 +100,16 @@ export default function Home(props) {
     mapView.addDataSource(vectorTileDataSource)
   }, [harp])
 
+  const signInWithTwitter = async () => {
+    await auth.signInWithPopup(twitterAuthProvider)
+  }
+
   return (
     <div
       className='flex h-screen w-screen justify-center items-center'
       style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
     >
+      <AuthCheck />
       <main className='mx-auto max-w-7xl px-4'>
         <div className='text-center'>
           <h1 className='text-4xl tracking-tight font-extrabold text-gray-100 sm:text-5xl md:text-6xl'>
@@ -117,6 +123,7 @@ export default function Home(props) {
               <a
                 href='#'
                 className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10'
+                onClick={signInWithTwitter}
               >
                 Log in with Twitter
               </a>
