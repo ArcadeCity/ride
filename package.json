@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
     "@magic-ext/oauth": "~0.7.0",
+    "@tailwindcss/forms": "^0.3.4",
     "firebase": "^8.2.1",
     "lodash.debounce": "^4.0.8",
     "lodash.kebabcase": "^4.1.1",
