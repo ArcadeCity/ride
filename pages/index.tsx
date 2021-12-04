@@ -26,8 +26,6 @@ export default function Home(props) {
   const [posts, setPosts] = useState(props.posts)
   const [loading, setLoading] = useState(false)
 
-  console.log(posts)
-
   const [postsEnd, setPostsEnd] = useState(false)
 
   // Get next page in pagination query
