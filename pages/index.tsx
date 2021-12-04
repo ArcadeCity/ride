@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { magic } from '@lib/magic'
+import Feed from '@components/mvp/Feed'
 import LoginHero from '@components/mvp/LoginHero'
 
 export default function HomePage() {
   const [userMetadata, setUserMetadata] = useState()
+  const [authed, setAuthed] = useState(true)
 
   useEffect(() => {
     console.log('userMetadata:', userMetadata)
@@ -15,16 +17,10 @@ export default function HomePage() {
     magic.user.isLoggedIn().then((magicIsLoggedIn) => {
       if (magicIsLoggedIn) {
         magic.user.getMetadata().then(setUserMetadata)
+        setAuthed(true)
       }
     })
   }, [])
 
-  return (
-    <div
-      className='flex h-screen w-screen justify-center items-center'
-      style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
-    >
-      <LoginHero />
-    </div>
-  )
+  return authed ? <Feed /> : <LoginHero />
 }
