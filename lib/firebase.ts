@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/functions'
 import 'firebase/storage'
 
 const firebaseConfig = {
@@ -21,6 +22,8 @@ if (!firebase.apps.length) {
 export const auth = firebase.auth()
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
 export const twitterAuthProvider = new firebase.auth.TwitterAuthProvider()
+
+export const functions = firebase.functions()
 
 // Firestore exports
 export const firestore = firebase.firestore()
