@@ -4,12 +4,33 @@ import Loader from '@components/Loader'
 import { auth, firestore, fromMillis, postToJSON, twitterAuthProvider } from '@lib/firebase'
 import { useCallback, useEffect, useState } from 'react'
 import { magic } from '@lib/magic'
+import { useRouter } from 'next/router'
 
 export default function Home(props) {
   const [posts, setPosts] = useState(props.posts)
   const [loading, setLoading] = useState(false)
   const [postsEnd, setPostsEnd] = useState(false)
   const [isLoggingIn, setIsLoggingIn] = useState(false)
+
+  const router = useRouter()
+  const [userMetadata, setUserMetadata] = useState()
+
+  useEffect(() => {
+    console.log('userMetadata:', userMetadata)
+  }, [userMetadata])
+
+  useEffect(() => {
+    // On mount, we check if a user is logged in.
+    // If so, we'll retrieve the authenticated user's profile.
+    magic.user.isLoggedIn().then((magicIsLoggedIn) => {
+      if (magicIsLoggedIn) {
+        magic.user.getMetadata().then(setUserMetadata)
+      } else {
+        // If no user is logged in, redirect to `/login`
+        // router.push('/login')
+      }
+    })
+  }, [])
 
   // Get next page in pagination query
   const getMorePosts = async () => {
