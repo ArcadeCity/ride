@@ -3,10 +3,12 @@ import { magic } from '@lib/magic'
 import Feed from '@components/mvp/Feed'
 import LoginHero from '@components/mvp/LoginHero'
 import { auth, functions } from '@lib/firebase'
+import { useStore } from '@lib/store'
 
 export default function HomePage() {
   const [userMetadata, setUserMetadata] = useState()
   const [authed, setAuthed] = useState(false)
+  const twitterMetadata = useStore((s) => s.oauthdata)
 
   useEffect(() => {
     console.log('userMetadata:', userMetadata)
@@ -23,13 +25,11 @@ export default function HomePage() {
         console.log('didToken:', didToken)
         const authFunc = functions.httpsCallable('auth')
         /* DID token is passed into the auth callable function */
-        let result = (await authFunc({ didToken })).data
+        let result = (await authFunc({ didToken, twitterMetadata })).data
         console.log('result:', result)
         /* Firebase user access token is used to authenticate */
         const wat = await auth.signInWithCustomToken(result.token)
         console.log('wat:', wat)
-        const oya = await magic.oauth
-        console.log(oya)
         setAuthed(true)
       }
     })
