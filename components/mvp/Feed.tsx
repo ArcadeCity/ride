@@ -1,10 +1,10 @@
-import PostForm from '@components/PostForm'
+import PostBox from '@components/mvp/PostBox'
 import { ChatAltIcon } from '@heroicons/react/solid'
 
 export default function Feed() {
   return (
     <>
-      <PostForm />
+      <PostBox />
       <div
         className='flow-root p-8 m-8 rounded-xl'
         style={{ backgroundColor: 'rgba(255,255,255,1)' }}
