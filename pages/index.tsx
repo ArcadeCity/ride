@@ -28,6 +28,8 @@ export default function HomePage() {
         /* Firebase user access token is used to authenticate */
         const wat = await auth.signInWithCustomToken(result.token)
         console.log('wat:', wat)
+        const oya = await magic.oauth
+        console.log(oya)
         setAuthed(true)
       }
     })
