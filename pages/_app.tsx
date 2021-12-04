@@ -11,11 +11,7 @@ import { useEffect } from 'react'
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData()
-  const oauthdata = useStore((s) => s.oauthdata)
-
-  useEffect(() => {
-    console.log('oauthdata:', oauthdata)
-  }, [oauthdata])
+  // const oauthdata = useStore((s) => s.oauthdata)
 
   return (
     <>

@@ -22,10 +22,8 @@ export default function Callback() {
             sub: object.oauth.userInfo.sub,
           }
           setoauthdata(info)
-          console.log('Oauth data saved:', info)
         })
         .finally(() => {
-          console.log('Redirected from Magic, on to the homepage...')
           router.push('/')
         })
     } catch (e) {
