@@ -2,6 +2,7 @@ import { auth, firestore, serverTimestamp } from '@lib/firebase'
 import { useStore } from '@lib/store'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import Image from 'next/image'
 
 export default function PostBox() {
   const twitterMetadata = useStore((s) => s.oauthdata)
@@ -36,7 +37,7 @@ export default function PostBox() {
   return (
     <div className='flex items-start space-x-4 m-8 max-w-xl'>
       <div className='flex-shrink-0'>
-        <img
+        <Image
           className='inline-block h-10 w-10 rounded-full'
           src={twitterMetadata?.profile ?? ''}
           alt=''

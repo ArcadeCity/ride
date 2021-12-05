@@ -7,6 +7,7 @@ import { UserContext } from '@lib/context'
 import { useStore } from '@lib/store'
 import { magic } from '@lib/magic'
 import { auth } from '@lib/firebase'
+import Image from 'next/image'
 
 const navigation = [
   // { name: 'Dashboard', href: '#', current: true },
@@ -52,12 +53,12 @@ export default function Navbar() {
                   </Disclosure.Button>
                 </div>
                 <div className='flex-shrink-0 flex items-center'>
-                  <img
+                  <Image
                     className='block lg:hidden h-8 w-auto'
                     src='https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg'
                     alt='Workflow'
                   />
-                  <img
+                  <Image
                     className='hidden lg:block h-8 w-auto'
                     src='https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg'
                     alt='Workflow'
@@ -107,7 +108,7 @@ export default function Navbar() {
                       <div>
                         <Menu.Button className='bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
                           <span className='sr-only'>Open user menu</span>
-                          <img
+                          <Image
                             className='h-8 w-8 rounded-full'
                             src={twitterMetadata?.profile ?? ''}
                             alt=''
@@ -171,7 +172,7 @@ export default function Navbar() {
             <div className='pt-4 pb-3 border-t border-gray-700'>
               <div className='flex items-center px-5 sm:px-6'>
                 <div className='flex-shrink-0'>
-                  <img
+                  <Image
                     className='h-10 w-10 rounded-full'
                     src={twitterMetadata?.profile ?? ''}
                     alt=''

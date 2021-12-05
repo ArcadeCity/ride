@@ -1,10 +1,11 @@
 import { ChatAltIcon } from '@heroicons/react/solid'
+import Image from 'next/image'
 
 export default function Post({ activityItem }) {
   return (
     <>
       <div className='relative'>
-        <img
+        <Image
           className='h-10 w-10 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white'
           src={activityItem.imageUrl}
           alt=''
@@ -19,6 +20,7 @@ export default function Post({ activityItem }) {
           <div className='text-sm'>
             <a
               target='_blank'
+              rel='noreferrer'
               href={activityItem.person.href}
               className='font-medium text-gray-900'
             >
