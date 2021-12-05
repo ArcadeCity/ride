@@ -33,7 +33,6 @@ export default function Navbar() {
     await auth.signOut()
     setoauthdata(null)
   }
-  console.log(user)
   return (
     <Disclosure as='nav' className='bg-transparent'>
       {({ open }) => (
@@ -93,13 +92,14 @@ export default function Navbar() {
                   </button>
                 </div> */}
                 <div className='hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center'>
-                  {/* <button
+                  <button
                     type='button'
                     className='bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
+                    onClick={handleLogout}
                   >
-                    <span className='sr-only'>View notifications</span>
+                    <span className='sr-only'>TEMP LOGOUT</span>
                     <BellIcon className='h-6 w-6' aria-hidden='true' />
-                  </button> */}
+                  </button>
 
                   {/* Profile dropdown */}
                   {twitterMetadata ? (
