@@ -30,7 +30,8 @@ export default function Post({ post }) {
             </a>
           </div>
           <p className='mt-0.5 text-sm text-gray-500'>
-            Posted at some point {post.geolocation?.city ? `in ${post.geolocation.city}` : ''}
+            Posted at {new Date(post.updatedAt).toLocaleString()}{' '}
+            {post.geolocation?.city ? `from ${post.geolocation.city}` : ''}
           </p>
         </div>
         <div className='mt-2 text-sm text-gray-700'>
