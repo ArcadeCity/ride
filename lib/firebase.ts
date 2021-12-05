@@ -3,6 +3,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/storage'
+import * as geofirestore from 'geofirestore'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBP3Brn_pj__JTFDGEIHacPS8ka3w-mtK4',
@@ -30,6 +31,7 @@ export const firestore = firebase.firestore()
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp
 export const fromMillis = firebase.firestore.Timestamp.fromMillis
 export const increment = firebase.firestore.FieldValue.increment
+export const GeoFirestore = geofirestore.initializeApp(firestore)
 
 // Storage exports
 export const storage = firebase.storage()
