@@ -33,6 +33,7 @@ exports.auth = functions.https.onCall(async (data, context) => {
 })
 
 exports.authDev = functions.https.onCall(async (data, context) => {
+  context.rawRequest.res.set('Access-Control-Allow-Origin', '*')
   const { Magic } = require('@magic-sdk/admin')
   const magic = new Magic(MAGICSECRETDEV)
   const didToken = data.didToken

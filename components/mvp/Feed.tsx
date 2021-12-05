@@ -3,8 +3,9 @@ import { useState } from 'react'
 import Onboarding from './Onboarding'
 import Post from './Post'
 
-export default function Feed() {
+export default function Feed({ posts }) {
   const [onboarded, setOnboarded] = useState(true)
+  console.log('posts:', posts)
   return (
     <>
       {onboarded ? <PostBox /> : <Onboarding />}
