@@ -3,5 +3,8 @@ import create from 'zustand'
 export const useStore = create<any>((set) => ({
   oauthdata: null,
   setoauthdata: (oauthdata) => set((state) => ({ oauthdata })),
-  // increase: (by) => set(state => ({ bears: state.bears + by })),
+  geolocation: {
+    latitude: 30.2666,
+    longitude: -97.7333,
+  },
 }))
