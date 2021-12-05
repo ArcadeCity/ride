@@ -1,8 +1,6 @@
-import { ChatAltIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
 
 export default function Post({ post }) {
-  console.log(post)
   if (!post.twitterMetadata) return <></>
   return (
     <>
@@ -17,10 +15,6 @@ export default function Post({ post }) {
             />
           </div>
         )}
-
-        <span className='absolute -bottom-0.5 -right-1 bg-white rounded-tl px-0.5 py-px'>
-          <ChatAltIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
-        </span>
       </div>
       <div className='min-w-0 flex-1'>
         <div>
