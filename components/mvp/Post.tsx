@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 export default function Post({ post }) {
   console.log(post)
+  if (!post.twitterMetadata) return <></>
   return (
     <>
       <div className='relative'>
@@ -29,8 +30,7 @@ export default function Post({ post }) {
             </a>
           </div>
           <p className='mt-0.5 text-sm text-gray-500'>
-            Posted at some point
-            {/* Posted {activityItem.date} in {activityItem.city} */}
+            Posted at some point {post.geolocation?.city ? `in ${post.geolocation.city}` : ''}
           </p>
         </div>
         <div className='mt-2 text-sm text-gray-700'>

@@ -14,6 +14,8 @@ export default function PostBox() {
 
   const { isValid, isDirty } = formState
 
+  if (!auth.currentUser) return <></>
+
   const postsCollection = firestore
     .collection('users')
     .doc(auth.currentUser.uid)

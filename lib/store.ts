@@ -6,5 +6,7 @@ export const useStore = create<any>((set) => ({
   geolocation: {
     latitude: 30.2666,
     longitude: -97.7333,
+    city: 'Austin, Texas',
+    countryCode: 'US',
   },
 }))
