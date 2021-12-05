@@ -52,17 +52,23 @@ export default function Navbar() {
                     )}
                   </Disclosure.Button>
                 </div>
-                <div className='flex-shrink-0 flex items-center'>
-                  <Image
-                    className='block lg:hidden h-8 w-auto'
-                    src='https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg'
-                    alt='Workflow'
-                  />
-                  <Image
-                    className='hidden lg:block h-8 w-auto'
-                    src='https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg'
-                    alt='Workflow'
-                  />
+                <div className='flex-shrink-0 flex items-center py-3'>
+                  <div className='block lg:hidden h-8 w-8 relative'>
+                    <Image
+                      src='/aclogo512.png'
+                      alt='Arcade City'
+                      layout='fill'
+                      objectFit='contain'
+                    />
+                  </div>
+                  <div className='hidden lg:block h-12 w-12 relative'>
+                    <Image
+                      src='/aclogo512.png'
+                      alt='Arcade City'
+                      layout='fill'
+                      objectFit='contain'
+                    />
+                  </div>
                 </div>
                 <div className='hidden md:ml-6 md:flex md:items-center md:space-x-4'>
                   {navigation.map((item) => (
@@ -108,11 +114,14 @@ export default function Navbar() {
                       <div>
                         <Menu.Button className='bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
                           <span className='sr-only'>Open user menu</span>
-                          <Image
-                            className='h-8 w-8 rounded-full'
-                            src={twitterMetadata?.profile ?? ''}
-                            alt=''
-                          />
+                          {twitterMetadata?.profile && (
+                            <Image
+                              className='h-8 w-8 rounded-full'
+                              src={twitterMetadata.profile}
+                              layout='fill'
+                              alt=''
+                            />
+                          )}
                         </Menu.Button>
                       </div>
                       <Transition
