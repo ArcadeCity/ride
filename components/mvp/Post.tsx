@@ -6,9 +6,14 @@ export default function Post({ post }) {
   return (
     <>
       <div className='relative'>
-        {post.imageUrl && (
+        {post.twitterMetadata.profile && (
           <div className='h-10 w-10 flex items-center justify-center ring-8 ring-white'>
-            <Image className='rounded-full bg-gray-400' src={post.imageUrl} layout='fill' alt='' />
+            <Image
+              className='rounded-full bg-gray-400'
+              src={post.twitterMetadata.profile}
+              layout='fill'
+              alt=''
+            />
           </div>
         )}
 
@@ -20,7 +25,7 @@ export default function Post({ post }) {
         <div>
           <div className='text-sm'>
             <a target='_blank' rel='noreferrer' href='#' className='font-medium text-gray-900'>
-              name
+              {`${post.twitterMetadata.name} @${post.twitterMetadata.preferredUsername}`}
             </a>
           </div>
           <p className='mt-0.5 text-sm text-gray-500'>

@@ -23,6 +23,7 @@ export default function PostBox() {
     const docRef = await postsCollection.add({
       content,
       geolocation,
+      twitterMetadata,
       updatedAt: serverTimestamp(),
     })
 
