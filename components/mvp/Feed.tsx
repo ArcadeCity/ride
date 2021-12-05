@@ -2,6 +2,7 @@ import PostBox from '@components/mvp/PostBox'
 import { useState } from 'react'
 import Onboarding from './Onboarding'
 import Post from './Post'
+import PostOld from './PostOld'
 
 export default function Feed({ posts }) {
   const [onboarded, setOnboarded] = useState(true)
@@ -14,6 +15,24 @@ export default function Feed({ posts }) {
         style={{ backgroundColor: 'rgba(255,255,255,1)' }}
       >
         <ul role='list' className='-mb-8'>
+          {posts &&
+            posts.map((post, postIdx) => (
+              <li key={post.id}>
+                <div className='relative pb-8'>
+                  {postIdx !== posts.length - 1 ? (
+                    <span
+                      className='absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200'
+                      aria-hidden='true'
+                    />
+                  ) : null}
+                  <div className='relative flex items-start space-x-3'>
+                    <Post post={post} />
+                  </div>
+                </div>
+              </li>
+            ))}
+        </ul>
+        <ul role='list' className='-mb-8'>
           {activity.map((activityItem, activityItemIdx) => (
             <li key={activityItem.id}>
               <div className='relative pb-8'>
@@ -24,7 +43,7 @@ export default function Feed({ posts }) {
                   />
                 ) : null}
                 <div className='relative flex items-start space-x-3'>
-                  {activityItem.type === 'post' ? <Post activityItem={activityItem} /> : null}
+                  {activityItem.type === 'post' ? <PostOld activityItem={activityItem} /> : null}
                 </div>
               </div>
             </li>
