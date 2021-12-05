@@ -7,6 +7,7 @@ import { UserContext } from '@lib/context'
 import { useStore } from '@lib/store'
 import { magic } from '@lib/magic'
 import { auth } from '@lib/firebase'
+import Image from 'next/image'
 
 const navigation = [
   // { name: 'Dashboard', href: '#', current: true },
@@ -33,7 +34,6 @@ export default function Navbar() {
     await auth.signOut()
     setoauthdata(null)
   }
-  console.log(user)
   return (
     <Disclosure as='nav' className='bg-transparent'>
       {({ open }) => (
@@ -52,17 +52,23 @@ export default function Navbar() {
                     )}
                   </Disclosure.Button>
                 </div>
-                <div className='flex-shrink-0 flex items-center'>
-                  <img
-                    className='block lg:hidden h-8 w-auto'
-                    src='https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg'
-                    alt='Workflow'
-                  />
-                  <img
-                    className='hidden lg:block h-8 w-auto'
-                    src='https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg'
-                    alt='Workflow'
-                  />
+                <div className='flex-shrink-0 flex items-center py-3'>
+                  <div className='block lg:hidden h-8 w-8 relative'>
+                    <Image
+                      src='/aclogo512.png'
+                      alt='Arcade City'
+                      layout='fill'
+                      objectFit='contain'
+                    />
+                  </div>
+                  <div className='hidden lg:block h-12 w-12 relative'>
+                    <Image
+                      src='/aclogo512.png'
+                      alt='Arcade City'
+                      layout='fill'
+                      objectFit='contain'
+                    />
+                  </div>
                 </div>
                 <div className='hidden md:ml-6 md:flex md:items-center md:space-x-4'>
                   {navigation.map((item) => (
@@ -93,13 +99,14 @@ export default function Navbar() {
                   </button>
                 </div> */}
                 <div className='hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center'>
-                  {/* <button
+                  <button
                     type='button'
                     className='bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
+                    onClick={handleLogout}
                   >
-                    <span className='sr-only'>View notifications</span>
+                    <span className='sr-only'>TEMP LOGOUT</span>
                     <BellIcon className='h-6 w-6' aria-hidden='true' />
-                  </button> */}
+                  </button>
 
                   {/* Profile dropdown */}
                   {twitterMetadata ? (
@@ -107,11 +114,14 @@ export default function Navbar() {
                       <div>
                         <Menu.Button className='bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
                           <span className='sr-only'>Open user menu</span>
-                          <img
-                            className='h-8 w-8 rounded-full'
-                            src={twitterMetadata?.profile ?? ''}
-                            alt=''
-                          />
+                          {twitterMetadata?.profile && (
+                            <Image
+                              className='h-8 w-8 rounded-full'
+                              src={twitterMetadata.profile}
+                              layout='fill'
+                              alt=''
+                            />
+                          )}
                         </Menu.Button>
                       </div>
                       <Transition
@@ -171,7 +181,7 @@ export default function Navbar() {
             <div className='pt-4 pb-3 border-t border-gray-700'>
               <div className='flex items-center px-5 sm:px-6'>
                 <div className='flex-shrink-0'>
-                  <img
+                  <Image
                     className='h-10 w-10 rounded-full'
                     src={twitterMetadata?.profile ?? ''}
                     alt=''
