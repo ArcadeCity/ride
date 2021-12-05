@@ -5,6 +5,8 @@ import LoginHero from '@components/mvp/LoginHero'
 import { auth, functions } from '@lib/firebase'
 import { useStore } from '@lib/store'
 
+const authRoute = process.env.NODE_ENV === 'production' ? 'auth' : 'authDev'
+
 export default function HomePage() {
   const [userMetadata, setUserMetadata] = useState()
   const [authed, setAuthed] = useState(false)
@@ -23,7 +25,7 @@ export default function HomePage() {
         // console.log('Authing with Firebase...')
         const didToken = await magic.user.getIdToken()
         // console.log('didToken:', didToken)
-        const authFunc = functions.httpsCallable('auth')
+        const authFunc = functions.httpsCallable(authRoute)
         /* DID token is passed into the auth callable function */
         let result = (await authFunc({ didToken, twitterMetadata })).data
         // console.log('result:', result)
