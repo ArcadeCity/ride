@@ -1,10 +1,13 @@
+import { useStore } from '@lib/store'
+
 export default function PostBox() {
+  const twitterMetadata = useStore((s) => s.oauthdata)
   return (
     <div className='flex items-start space-x-4 m-8'>
       <div className='flex-shrink-0'>
         <img
           className='inline-block h-10 w-10 rounded-full'
-          src='https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+          src={twitterMetadata?.profile ?? ''}
           alt=''
         />
       </div>
@@ -12,14 +15,14 @@ export default function PostBox() {
         <form action='#' className='relative'>
           <div className='border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500'>
             <label htmlFor='comment' className='sr-only'>
-              Add your comment
+              Write a post
             </label>
             <textarea
               rows={3}
               name='comment'
               id='comment'
               className='block w-full py-3 border-0 resize-none focus:ring-0 sm:text-sm'
-              placeholder='Add your comment...'
+              placeholder='Write a post...'
               defaultValue={''}
             />
 
