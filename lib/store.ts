@@ -11,16 +11,4 @@ export const useStore = create<any>((set, get) => ({
     countryCode: 'US',
   },
   add: (post) => set((state) => ({ posts: [...state.posts, { ...post }] })),
-  actions: {
-    addPost(post) {
-      const sofar = get().posts
-      sofar.push(post)
-      set({ posts: sofar })
-      console.log('added post:', post)
-      // get().posts.push(post)
-    },
-    setPosts(posts) {
-      set({ posts })
-    },
-  },
 }))
