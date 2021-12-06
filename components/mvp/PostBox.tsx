@@ -1,4 +1,11 @@
-import { auth, firestore, serverTimestamp } from '@lib/firebase'
+import {
+  auth,
+  firestore,
+  GeoFirestore,
+  GeoPoint,
+  postsGeocollection,
+  serverTimestamp,
+} from '@lib/firebase'
 import { useStore } from '@lib/store'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -14,8 +21,9 @@ export default function PostBox() {
 
   const { isValid, isDirty } = formState
 
-  const postsCollection = firestore
-    .collection('users')
+  if (!auth.currentUser) return <></>
+
+  const postsCollection = GeoFirestore.collection('users')
     .doc(auth.currentUser.uid)
     .collection('posts')
 
@@ -23,7 +31,9 @@ export default function PostBox() {
     const docRef = await postsCollection.add({
       content,
       geolocation,
+      twitterMetadata,
       updatedAt: serverTimestamp(),
+      coordinates: new GeoPoint(40.7589, -73.9831),
     })
 
     console.log('auth.currentUser.uid:', auth.currentUser.uid)

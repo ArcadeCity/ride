@@ -3,6 +3,8 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/storage'
+import * as geofirestore from 'geofirestore'
+import { useStore } from './store'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBP3Brn_pj__JTFDGEIHacPS8ka3w-mtK4',
@@ -27,9 +29,12 @@ export const functions = firebase.functions()
 
 // Firestore exports
 export const firestore = firebase.firestore()
+export const GeoPoint = firebase.firestore.GeoPoint
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp
 export const fromMillis = firebase.firestore.Timestamp.fromMillis
 export const increment = firebase.firestore.FieldValue.increment
+export const GeoFirestore = geofirestore.initializeApp(firestore)
+export const postsGeocollection = GeoFirestore.collectionGroup('posts')
 
 // Storage exports
 export const storage = firebase.storage()
@@ -56,8 +61,51 @@ export function postToJSON(doc) {
   const data = doc.data()
   return {
     ...data,
+    id: doc.id,
     // Gotcha! firestore timestamp NOT serializable to JSON. Must convert to milliseconds
-    createdAt: data?.createdAt.toMillis() || 0,
+    // createdAt: data?.createdAt.toMillis() || 0,
     updatedAt: data?.updatedAt.toMillis() || 0,
   }
+}
+
+// Query viewers' locations from Firestore
+let subscription
+export function queryFirestore(location) {
+  if (subscription) {
+    console.log('Old query subscription cancelled')
+    subscription()
+    subscription = false
+  }
+
+  const geoCollectionRef = postsGeocollection
+  const radius = 1500
+  const query = geoCollectionRef.near({
+    center: new firebase.firestore.GeoPoint(location.lat, location.lng),
+    radius,
+  })
+
+  console.log('New query subscription created')
+  subscription = query.onSnapshot((snapshot) => {
+    // console.log(snapshot.docChanges())
+    snapshot.docChanges().forEach((change) => {
+      switch (change.type) {
+        case 'added':
+          useStore.getState().add({
+            id: change.doc.id,
+            ...change.doc.data(),
+            updatedAt: Date.now(),
+          })
+          console.log('Snapshot detected added')
+          return //addMarker(change.doc.id, change.doc.data());
+        case 'modified':
+          console.log('Snapshot detected modified')
+          return //updateMarker(change.doc.id, change.doc.data());
+        case 'removed':
+          console.log('Snapshot detected removed ')
+          return //removeMarker(change.doc.id, change.doc.data());
+        default:
+          break
+      }
+    })
+  })
 }

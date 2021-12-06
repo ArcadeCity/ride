@@ -14,6 +14,7 @@
     "@magic-ext/oauth": "~0.7.0",
     "@tailwindcss/forms": "^0.3.4",
     "firebase": "^8.2.1",
+    "geofirestore": "^4.4.2",
     "lodash.debounce": "^4.0.8",
     "lodash.kebabcase": "^4.1.1",
     "magic-sdk": "^4.1.1",

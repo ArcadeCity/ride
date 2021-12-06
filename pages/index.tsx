@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { magic } from '@lib/magic'
 import Feed from '@components/mvp/Feed'
 import LoginHero from '@components/mvp/LoginHero'
-import { auth, functions } from '@lib/firebase'
+import { auth, functions, queryFirestore } from '@lib/firebase'
 import { useStore } from '@lib/store'
 
 const authRoute = process.env.NODE_ENV === 'production' ? 'auth' : 'authDev'
@@ -12,9 +12,10 @@ export default function HomePage() {
   const [authed, setAuthed] = useState(false)
   const twitterMetadata = useStore((s) => s.oauthdata)
 
-  // useEffect(() => {
-  //   console.log('userMetadata:', userMetadata)
-  // }, [userMetadata])
+  useEffect(() => {
+    if (!authed) return
+    queryFirestore({ lat: 40.7589, lng: -73.9861 })
+  }, [authed])
 
   useEffect(() => {
     // On mount, we check if a user is logged in.
