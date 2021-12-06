@@ -4,6 +4,7 @@ import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/storage'
 import * as geofirestore from 'geofirestore'
+import { useStore } from './store'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBP3Brn_pj__JTFDGEIHacPS8ka3w-mtK4',
@@ -85,10 +86,15 @@ export function queryFirestore(location) {
 
   console.log('New query subscription created')
   subscription = query.onSnapshot((snapshot) => {
-    console.log(snapshot.docChanges())
+    // console.log(snapshot.docChanges())
     snapshot.docChanges().forEach((change) => {
       switch (change.type) {
         case 'added':
+          useStore.getState().add({
+            id: change.doc.id,
+            ...change.doc.data(),
+            updatedAt: Date.now(),
+          })
           console.log('Snapshot detected added')
           return //addMarker(change.doc.id, change.doc.data());
         case 'modified':

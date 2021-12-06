@@ -20,17 +20,19 @@ export default function HomePage() {
   const [userMetadata, setUserMetadata] = useState()
   const [authed, setAuthed] = useState(false)
   const twitterMetadata = useStore((s) => s.oauthdata)
-  const [posts, setPosts] = useState<any>()
+  const posts = useStore((s) => s.posts)
+  const { setPosts } = useStore((s) => s.actions)
+  // const [posts, setPosts] = useState<any>()
 
   useEffect(() => {
     if (!authed) return
     ;(async () => {
       // const geocollection = GeoFirestore.collectionGroup('posts')
 
-      const postsQuery = postsGeocollection.near({
-        center: new GeoPoint(40.7589, -73.9851),
-        radius: 1000,
-      })
+      // const postsQuery = postsGeocollection.near({
+      //   center: new GeoPoint(40.7589, -73.9851),
+      //   radius: 1000,
+      // })
 
       queryFirestore({ lat: 40.7589, lng: -73.9861 })
 
@@ -46,8 +48,8 @@ export default function HomePage() {
       //
       //   .limit(10)
 
-      const posts = (await postsQuery.get()).docs.map(postToJSON)
-      setPosts(posts)
+      // const posts = (await postsQuery.get()).docs.map(postToJSON)
+      // setPosts(posts)
     })()
   }, [authed])
 
@@ -76,5 +78,5 @@ export default function HomePage() {
     })
   }, [])
 
-  return authed ? <Feed posts={posts} /> : <LoginHero />
+  return authed ? <Feed /> : <LoginHero />
 }
