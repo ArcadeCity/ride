@@ -2,7 +2,16 @@ import { useEffect, useState } from 'react'
 import { magic } from '@lib/magic'
 import Feed from '@components/mvp/Feed'
 import LoginHero from '@components/mvp/LoginHero'
-import { auth, firestore, functions, postToJSON } from '@lib/firebase'
+import {
+  auth,
+  firestore,
+  functions,
+  GeoFirestore,
+  GeoPoint,
+  postsGeocollection,
+  postToJSON,
+  queryFirestore,
+} from '@lib/firebase'
 import { useStore } from '@lib/store'
 
 const authRoute = process.env.NODE_ENV === 'production' ? 'auth' : 'authDev'
@@ -16,13 +25,26 @@ export default function HomePage() {
   useEffect(() => {
     if (!authed) return
     ;(async () => {
-      const postsQuery = firestore
-        .collectionGroup('posts')
-        // .orderBy('geolocation', 'desc')
-        // .where('geolocation', '!=', null)
-        // .where('published', '==', true)
-        .orderBy('updatedAt', 'desc')
-        .limit(10)
+      // const geocollection = GeoFirestore.collectionGroup('posts')
+
+      const postsQuery = postsGeocollection.near({
+        center: new GeoPoint(40.7589, -73.9851),
+        radius: 1000,
+      })
+
+      queryFirestore({ lat: 40.7589, lng: -73.9861 })
+
+      // .limit(100)
+      // .where('geolocation', '!=', null)
+      // .orderBy('geolocation', 'desc')
+
+      // const postsQuery = firestore
+      //   .collectionGroup('posts')
+      //   //
+      //   // .where('geolocation', '!=', null)
+      //   // .where('published', '==', true)
+      //
+      //   .limit(10)
 
       const posts = (await postsQuery.get()).docs.map(postToJSON)
       setPosts(posts)

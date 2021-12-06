@@ -4,8 +4,8 @@ export const useStore = create<any>((set) => ({
   oauthdata: null,
   setoauthdata: (oauthdata) => set((state) => ({ oauthdata })),
   geolocation: {
-    latitude: 30.2666,
-    longitude: -97.7333,
+    latitude: 40.7589, //30.2666,
+    longitude: -73.9851, //-97.7333,
     city: 'Austin, Texas',
     countryCode: 'US',
   },
