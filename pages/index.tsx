@@ -4,6 +4,7 @@ import Feed from '@components/mvp/Feed'
 import LoginHero from '@components/mvp/LoginHero'
 import { auth, functions, queryFirestore } from '@lib/firebase'
 import { useStore } from '@lib/store'
+import { useStores } from '@lib/root-store-context'
 
 const authRoute = process.env.NODE_ENV === 'production' ? 'auth' : 'authDev'
 
@@ -11,10 +12,11 @@ export default function HomePage() {
   const [userMetadata, setUserMetadata] = useState()
   const [authed, setAuthed] = useState(false)
   const twitterMetadata = useStore((s) => s.oauthdata)
+  const store = useStores()
 
   useEffect(() => {
     if (!authed) return
-    queryFirestore({ lat: 40.7589, lng: -73.9861 })
+    queryFirestore({ lat: 40.7589, lng: -73.9861 }, store)
   }, [authed])
 
   useEffect(() => {

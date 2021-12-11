@@ -4,6 +4,7 @@ import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/storage'
 import * as geofirestore from 'geofirestore'
+import { RootStore } from './mst'
 import { useStore } from './store'
 
 const firebaseConfig = {
@@ -70,7 +71,7 @@ export function postToJSON(doc) {
 
 // Query viewers' locations from Firestore
 let subscription
-export function queryFirestore(location) {
+export function queryFirestore(location: any, store: RootStore) {
   if (subscription) {
     console.log('Old query subscription cancelled')
     subscription()
@@ -90,6 +91,14 @@ export function queryFirestore(location) {
     snapshot.docChanges().forEach((change) => {
       switch (change.type) {
         case 'added':
+          const data = change.doc.data()
+          store.addPost({
+            id: change.doc.id,
+            twitterMetadata: data.twitterMetadata,
+            updatedAt: Date.now(),
+            geolocation: data.geolocation,
+            content: data.content,
+          })
           useStore.getState().add({
             id: change.doc.id,
             ...change.doc.data(),

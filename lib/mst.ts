@@ -24,8 +24,8 @@ export const PostModel = types.model({
   id: types.identifier,
   content: types.optional(types.string, ''),
   geolocation: GeolocationModel,
-  twitterMetadata: TwitterMetadataModel,
-  updatedAt: types.Date,
+  twitterMetadata: types.maybeNull(TwitterMetadataModel),
+  updatedAt: types.number,
 })
 
 export const RootStoreModel = types
