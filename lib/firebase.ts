@@ -96,7 +96,7 @@ export function queryFirestore(location: any, store: RootStore) {
           store.addPost({
             id: change.doc.id,
             twitterMetadata: data.twitterMetadata,
-            updatedAt: data.updatedAt.toMillis(),
+            updatedAt: data?.updatedAt?.toMillis() || Date.now(),
             geolocation: data.geolocation,
             content: data.content,
           })
