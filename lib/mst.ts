@@ -1,5 +1,10 @@
 import { Instance, onSnapshot, types } from 'mobx-state-tree'
 import storage from 'localforage'
+import { mst } from 'reactotron-mst'
+
+const Tron =
+  typeof window !== 'undefined' ? require('reactotron-react-js').default : { configure: () => {} }
+// import Tron from 'reactotron-react-js'
 
 const ROOT_STATE_STORAGE_KEY = 'root'
 
@@ -61,9 +66,27 @@ export async function setupRootStore() {
     // __DEV__ && console.tron.error(e.message, null)
   }
 
+  if (typeof window !== 'undefined') {
+    Tron.configure({
+      name: 'Ride',
+      port: 9090,
+    })
+
+    // ignore some chatty `mobx-state-tree` actions
+    const RX = /postProcessSnapshot|@APPLY_SNAPSHOT/
+
+    // hookup mobx-state-tree middleware
+    Tron.use(
+      mst({
+        filter: (event) => RX.test(event.name) === false,
+      })
+    )
+    Tron.connect()
+    Tron.trackMstNode(rootStore)
+  }
   // reactotron logging
   // if (__DEV__) {
-  //   env.reactotron.setRootStore(rootStore, data)
+  // env.reactotron.setRootStore(rootStore, data)
   // }
 
   let lastSaved = new Date()
