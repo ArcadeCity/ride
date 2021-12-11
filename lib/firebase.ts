@@ -4,6 +4,7 @@ import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/storage'
 import * as geofirestore from 'geofirestore'
+import { RootStore } from './mst'
 import { useStore } from './store'
 
 const firebaseConfig = {
@@ -70,7 +71,7 @@ export function postToJSON(doc) {
 
 // Query viewers' locations from Firestore
 let subscription
-export function queryFirestore(location) {
+export function queryFirestore(location: any, store: RootStore) {
   if (subscription) {
     console.log('Old query subscription cancelled')
     subscription()
@@ -90,15 +91,33 @@ export function queryFirestore(location) {
     snapshot.docChanges().forEach((change) => {
       switch (change.type) {
         case 'added':
-          useStore.getState().add({
+          const data = change.doc.data()
+          // console.log(data)
+          store.addPost({
             id: change.doc.id,
-            ...change.doc.data(),
-            updatedAt: Date.now(),
+            twitterMetadata: data.twitterMetadata,
+            updatedAt: data?.updatedAt?.toMillis() || Date.now(),
+            geolocation: data.geolocation,
+            content: data.content,
           })
+          // useStore.getState().add({
+          //   id: change.doc.id,
+          //   ...change.doc.data(),
+          //   updatedAt: Date.now(),
+          // })
           console.log('Snapshot detected added')
           return //addMarker(change.doc.id, change.doc.data());
         case 'modified':
           console.log('Snapshot detected modified')
+          const data2 = change.doc.data()
+          console.log('data2?', change.doc.data)
+          // store.addPost({
+          //   id: change.doc.id,
+          //   twitterMetadata: data2.twitterMetadata,
+          //   updatedAt: Date.now(),
+          //   geolocation: data2.geolocation,
+          //   content: data2.content,
+          // })
           return //updateMarker(change.doc.id, change.doc.data());
         case 'removed':
           console.log('Snapshot detected removed ')

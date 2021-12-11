@@ -15,9 +15,13 @@
     "@tailwindcss/forms": "^0.3.4",
     "firebase": "^8.2.1",
     "geofirestore": "^4.4.2",
+    "localforage": "^1.10.0",
     "lodash.debounce": "^4.0.8",
     "lodash.kebabcase": "^4.1.1",
     "magic-sdk": "^4.1.1",
+    "mobx": "6.3.5",
+    "mobx-react-lite": "3.2.1",
+    "mobx-state-tree": "5.0.3",
     "next": "12.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
@@ -26,6 +30,8 @@
     "react-hot-toast": "^1.0.2",
     "react-markdown": "^5.0.3",
     "react-social-login-buttons": "^3.4.0",
+    "reactotron-mst": "^3.1.4",
+    "reactotron-react-js": "^3.3.7",
     "zustand": "^3.6.6"
   },
   "devDependencies": {

@@ -1,14 +1,14 @@
 import PostBox from '@components/mvp/PostBox'
-import { useStore } from '@lib/store'
+import { useStores } from '@lib/root-store-context'
 import { useState } from 'react'
 import Onboarding from './Onboarding'
 import Post from './Post'
+import { observer } from 'mobx-react-lite'
 
-export default function Feed() {
+function Feed() {
   const [onboarded, setOnboarded] = useState(true)
-  // console.log('posts:', posts)
-  const posts = useStore((s) => s.posts)
-  console.log('Posts:', posts.length, posts)
+  const posts = useStores().postsArray
+
   return (
     <>
       {onboarded ? <PostBox /> : <Onboarding />}
@@ -37,3 +37,5 @@ export default function Feed() {
     </>
   )
 }
+
+export default observer(Feed)

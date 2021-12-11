@@ -2,10 +2,12 @@ import { magic } from '@lib/magic'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useStore } from '@lib/store'
+import { useStores } from '@lib/root-store-context'
 
 export default function Callback() {
   const router = useRouter()
   const setoauthdata = useStore((s) => s.setoauthdata)
+  const setUser = useStores().setUser
   useEffect(() => {
     // On mount, we try to login with a Magic credential in the URL query.
     try {
@@ -22,6 +24,7 @@ export default function Callback() {
             sub: object.oauth.userInfo.sub,
           }
           setoauthdata(info)
+          setUser(info)
         })
         .finally(() => {
           router.push('/')
