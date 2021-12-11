@@ -42,6 +42,12 @@ export const RootStoreModel = types
       self.posts.set(post.id, PostModel.create(post))
     },
   }))
+  .views((self) => ({
+    get postsArray(): Post[] {
+      const posts = Array.from(self.posts.values())
+      return posts.filter((p) => !!p.twitterMetadata)
+    },
+  }))
 
 export interface Post extends Instance<typeof PostModel> {}
 export interface RootStore extends Instance<typeof RootStoreModel> {}
@@ -95,15 +101,16 @@ export async function setupRootStore() {
 
   // track changes & save to storage
   onSnapshot(rootStore, (snapshot) => {
-    const now = new Date()
-    const dif = now.getTime() - lastSaved.getTime()
-    secondsSinceLastSent = dif / 1000
+    storage.setItem(ROOT_STATE_STORAGE_KEY, JSON.stringify(snapshot))
+    // const now = new Date()
+    // const dif = now.getTime() - lastSaved.getTime()
+    // secondsSinceLastSent = dif / 1000
 
-    if (!lastSaved || secondsSinceLastSent > SAVE_INTERVAL) {
-      lastSaved = new Date()
-      storage.setItem(ROOT_STATE_STORAGE_KEY, JSON.stringify(snapshot))
-      console.log('Saved', lastSaved)
-    }
+    // if (!lastSaved || secondsSinceLastSent > SAVE_INTERVAL) {
+    //   lastSaved = new Date()
+    //   storage.setItem(ROOT_STATE_STORAGE_KEY, JSON.stringify(snapshot))
+    //   console.log('Saved', lastSaved)
+    // }
   })
 
   return rootStore
