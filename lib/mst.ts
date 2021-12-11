@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree'
+import { Instance, types } from 'mobx-state-tree'
 
 export const TwitterMetadataModel = types.model({
   email: '',
@@ -24,3 +24,15 @@ export const PostModel = types.model({
   twitterMetadata: TwitterMetadataModel,
   updatedAt: types.Date,
 })
+
+export const RootStore = types
+  .model({
+    posts: types.map(PostModel),
+  })
+  .actions((self) => ({
+    addPost(post: Post) {
+      self.posts.set(post.id, PostModel.create(post))
+    },
+  }))
+
+export interface Post extends Instance<typeof PostModel> {}
