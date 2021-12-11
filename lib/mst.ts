@@ -45,7 +45,9 @@ export const RootStoreModel = types
   .views((self) => ({
     get postsArray(): Post[] {
       const posts = Array.from(self.posts.values())
-      return posts.filter((p) => !!p.twitterMetadata)
+      return posts
+        .filter((p) => !!p.twitterMetadata)
+        .sort((p1, p2) => (p1.updatedAt > p2.updatedAt ? -1 : 1))
     },
   }))
 
