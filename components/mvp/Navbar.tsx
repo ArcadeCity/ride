@@ -1,13 +1,14 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useContext } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { MenuIcon, XIcon, LogoutIcon } from '@heroicons/react/outline'
 import { PlusSmIcon } from '@heroicons/react/solid'
 import { UserContext } from '@lib/context'
 import { useStore } from '@lib/store'
 import { magic } from '@lib/magic'
 import { auth } from '@lib/firebase'
 import Image from 'next/image'
+import { useStores } from '@lib/root-store-context'
 
 const navigation = [
   // { name: 'Dashboard', href: '#', current: true },
@@ -29,10 +30,13 @@ export default function Navbar() {
   const { user, username } = useContext(UserContext)
   const twitterMetadata = useStore((s) => s.oauthdata)
   const setoauthdata = useStore((s) => s.setoauthdata)
+  const setUser = useStores().setUser
+  const authed = !!useStores().user
   const handleLogout = async () => {
+    setoauthdata(null)
+    setUser(null)
     await magic.user.logout()
     await auth.signOut()
-    setoauthdata(null)
   }
   return (
     <Disclosure as='nav' className='bg-transparent'>
@@ -99,14 +103,16 @@ export default function Navbar() {
                   </button>
                 </div> */}
                 <div className='hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center'>
-                  <button
-                    type='button'
-                    className='bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
-                    onClick={handleLogout}
-                  >
-                    <span className='sr-only'>TEMP LOGOUT</span>
-                    <BellIcon className='h-6 w-6' aria-hidden='true' />
-                  </button>
+                  {authed && (
+                    <button
+                      type='button'
+                      className='bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
+                      onClick={handleLogout}
+                    >
+                      <span className='sr-only'>TEMP LOGOUT</span>
+                      <LogoutIcon className='h-6 w-6' aria-hidden='true' />
+                    </button>
+                  )}
 
                   {/* Profile dropdown */}
                   {twitterMetadata ? (
@@ -196,7 +202,7 @@ export default function Navbar() {
                   className='ml-auto flex-shrink-0 bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
                 >
                   <span className='sr-only'>View notifications</span>
-                  <BellIcon className='h-6 w-6' aria-hidden='true' />
+                  <LogoutIcon className='h-6 w-6' aria-hidden='true' />
                 </button>
               </div>
               <div className='mt-3 px-2 space-y-1 sm:px-3'>

@@ -13,12 +13,10 @@ export default function LoginHero() {
     setIsLoggingIn(true)
 
     try {
-      console.log('attempting')
       await magic.oauth.loginWithRedirect({
         provider,
         redirectURI: new URL('/callback', window.location.origin).href,
       })
-      console.log('did what')
       // history.push("/");
     } catch (e) {
       console.log('failed:', e)
