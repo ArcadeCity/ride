@@ -1,11 +1,15 @@
 import PostBox from '@components/mvp/PostBox'
+import { useStores } from '@lib/root-store-context'
 import { useStore } from '@lib/store'
+import { values } from 'mobx'
 import { useState } from 'react'
 import Onboarding from './Onboarding'
 import Post from './Post'
 
 export default function Feed() {
   const [onboarded, setOnboarded] = useState(true)
+  const hehe = useStores().posts
+  console.log('MST posts:', values(hehe))
   // console.log('posts:', posts)
   const posts = useStore((s) => s.posts)
   console.log('Posts:', posts.length, posts)

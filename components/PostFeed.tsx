@@ -1,6 +1,9 @@
+import { useStores } from '@lib/root-store-context'
 import Link from 'next/link'
 
 export default function PostFeed({ posts, admin = false }) {
+  const hehe = useStores().posts
+  console.log('MST posts:', hehe)
   return posts ? posts.map((post) => <PostItem post={post} key={post.slug} admin={admin} />) : null
 }
 

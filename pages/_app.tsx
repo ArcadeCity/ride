@@ -7,11 +7,21 @@ import { Toaster } from 'react-hot-toast'
 import Head from 'next/head'
 import ArcadeMap from '@components/mvp/ArcadeMap'
 import { useStore } from '@lib/store'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { RootStore, setupRootStore } from '@lib/mst'
+import { RootStoreProvider } from '@lib/root-store-context'
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData()
-  // const oauthdata = useStore((s) => s.oauthdata)
+  const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
+
+  useEffect(() => {
+    ;(async () => {
+      const root = await setupRootStore()
+      setRootStore(root)
+      console.log('Set root store.')
+    })()
+  }, [])
 
   return (
     <>
@@ -19,11 +29,15 @@ function MyApp({ Component, pageProps }) {
         <script src='https://unpkg.com/three/build/three.min.js' defer></script>
         <script src='https://unpkg.com/@here/harp.gl/dist/harp.js' defer></script>
       </Head>
-      <UserContext.Provider value={userData}>
-        <Navbar />
-        <Component {...pageProps} />
-        <Toaster />
-      </UserContext.Provider>
+      {!!rootStore && (
+        <RootStoreProvider value={rootStore}>
+          <UserContext.Provider value={userData}>
+            <Navbar />
+            <Component {...pageProps} />
+            <Toaster />
+          </UserContext.Provider>
+        </RootStoreProvider>
+      )}
       <ArcadeMap />
     </>
   )
