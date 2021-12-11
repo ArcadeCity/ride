@@ -1,8 +1,5 @@
 import PostBox from '@components/mvp/PostBox'
-import { getSnapshot } from 'mobx-state-tree'
 import { useStores } from '@lib/root-store-context'
-import { useStore } from '@lib/store'
-import { values } from 'mobx'
 import { useState } from 'react'
 import Onboarding from './Onboarding'
 import Post from './Post'
@@ -12,12 +9,6 @@ function Feed() {
   const [onboarded, setOnboarded] = useState(true)
   const posts = useStores().postsArray
 
-  // return posts.map((post, wat) => (
-  //   <p key={post.id} className='text-white'>
-  //     {/* {post.toString()} */}
-  //     {post.content}
-  //   </p>
-  // ))
   return (
     <>
       {onboarded ? <PostBox /> : <Onboarding />}
