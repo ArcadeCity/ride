@@ -11,6 +11,7 @@ const authRoute = process.env.NODE_ENV === 'production' ? 'auth' : 'authDev'
 export default function HomePage() {
   const [userMetadata, setUserMetadata] = useState()
   const [authed, setAuthed] = useState(false)
+  const user = useStores().user
   const twitterMetadata = useStore((s) => s.oauthdata)
   const store = useStores()
 
@@ -40,5 +41,5 @@ export default function HomePage() {
     })
   }, [])
 
-  return authed ? <Feed /> : <LoginHero />
+  return !!user ? <Feed /> : <LoginHero />
 }

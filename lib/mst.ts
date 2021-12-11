@@ -36,10 +36,14 @@ export const PostModel = types.model({
 export const RootStoreModel = types
   .model({
     posts: types.map(PostModel),
+    user: types.maybeNull(TwitterMetadataModel),
   })
   .actions((self) => ({
     addPost(post: Post) {
       self.posts.set(post.id, PostModel.create(post))
+    },
+    setUser(user: TwitterMetadata) {
+      self.user = user
     },
   }))
   .views((self) => ({
@@ -52,6 +56,7 @@ export const RootStoreModel = types
   }))
 
 export interface Post extends Instance<typeof PostModel> {}
+export interface TwitterMetadata extends Instance<typeof TwitterMetadataModel> {}
 export interface RootStore extends Instance<typeof RootStoreModel> {}
 
 export async function setupRootStore() {

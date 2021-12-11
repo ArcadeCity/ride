@@ -10,9 +10,11 @@ import { useStore } from '@lib/store'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import Image from 'next/image'
+import { useStores } from '@lib/root-store-context'
 
 export default function PostBox() {
-  const twitterMetadata = useStore((s) => s.oauthdata)
+  const twitterMetadata = useStores().user
+  // useStore((s) => s.oauthdata)
   const geolocation = useStore((s) => s.geolocation)
   const { register, errors, handleSubmit, formState, reset, watch } = useForm({
     // defaultValues,
@@ -22,6 +24,7 @@ export default function PostBox() {
   const { isValid, isDirty } = formState
 
   if (!auth.currentUser) return <></>
+  // if (!auth.currentUser) return <></>
 
   const postsCollection = GeoFirestore.collection('users')
     .doc(auth.currentUser.uid)
