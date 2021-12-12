@@ -27,7 +27,7 @@ export default function LoginHero() {
   }, [])
   return (
     <div
-      className='flex flex-col h-screen w-screen justify-center items-center'
+      className='fixed flex flex-col h-screen w-screen justify-center items-center'
       style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
     >
       <main className='mx-auto max-w-7xl px-4'>

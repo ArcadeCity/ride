@@ -106,12 +106,12 @@ export function queryFirestore(location: any, store: RootStore) {
           //   ...change.doc.data(),
           //   updatedAt: Date.now(),
           // })
-          console.log('Snapshot detected added')
+          // console.log('Snapshot detected added')
           return //addMarker(change.doc.id, change.doc.data());
         case 'modified':
-          console.log('Snapshot detected modified')
-          const data2 = change.doc.data()
-          console.log('data2?', data2)
+          // console.log('Snapshot detected modified')
+          // const data2 = change.doc.data()
+          // console.log('data2?', data2)
           // store.addPost({
           //   id: change.doc.id,
           //   twitterMetadata: data2.twitterMetadata,
