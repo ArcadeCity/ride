@@ -10,7 +10,7 @@ import {
   twitterAuthProvider,
 } from '@lib/firebase'
 import { useCallback, useEffect, useState } from 'react'
-import { magic } from '@lib/magic'
+
 import { useRouter } from 'next/router'
 import { useStores } from '@lib/root-store-context'
 import { checkLocationPermissions } from '@lib/location'
