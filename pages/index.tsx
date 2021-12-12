@@ -9,7 +9,6 @@ import { useStores } from '@lib/root-store-context'
 const authRoute = process.env.NODE_ENV === 'production' ? 'auth' : 'authDev'
 
 export default function HomePage() {
-  const [userMetadata, setUserMetadata] = useState()
   const [authed, setAuthed] = useState(false)
   const user = useStores().user
   const twitterMetadata = useStore((s) => s.oauthdata)
@@ -27,17 +26,12 @@ export default function HomePage() {
     // If so, we'll auth with Firebase the authenticated user's profile.
     magic.user.isLoggedIn().then(async (magicIsLoggedIn) => {
       if (magicIsLoggedIn) {
-        magic.user.getMetadata().then(setUserMetadata)
-        // console.log('Authing with Firebase...')
         const didToken = await magic.user.getIdToken()
-        // console.log('didToken:', didToken)
         const authFunc = functions.httpsCallable(authRoute)
         /* DID token is passed into the auth callable function */
         let result = (await authFunc({ didToken, twitterMetadata })).data
-        // console.log('result:', result)
         /* Firebase user access token is used to authenticate */
-        const wat = await auth.signInWithCustomToken(result.token)
-        // console.log('wat:', wat)
+        await auth.signInWithCustomToken(result.token)
         setAuthed(true)
       }
     })

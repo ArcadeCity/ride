@@ -40,7 +40,6 @@ function MyApp({ Component, pageProps }) {
           defer
         ></script>
       </Head>
-
       <Metatags />
       {!!rootStore && (
         <RootStoreProvider value={rootStore}>
