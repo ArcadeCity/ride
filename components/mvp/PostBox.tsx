@@ -14,6 +14,25 @@ export default function PostBox() {
   // console.log('user:', user)
   // console.log('authState:', authState)
 
+  const lat = useStores().coords?.lat
+  const lng = useStores().coords?.lng
+
+  const geolocation = {
+    lat,
+    lng,
+    city: useStores().city,
+    countryCode: useStores().countryCode,
+  }
+
+  // useStore((s) => s.oauthdata)
+  // const geolocation = useStore((s) => s.geolocation)
+  const { register, errors, handleSubmit, formState, reset, watch } = useForm({
+    // defaultValues,
+    mode: 'onChange',
+  })
+
+  const { isValid, isDirty } = formState
+
   if (!twitterMetadata) {
     return (
       <div className='flex items-center justify-center space-x-4 m-8 w-full max-w-xl bg-white rounded-xl'>
@@ -30,22 +49,6 @@ export default function PostBox() {
       </div>
     )
   }
-  const lat = useStores().coords?.lat
-  const lng = useStores().coords?.lng
-  const geolocation = {
-    lat,
-    lng,
-    city: useStores().city,
-    countryCode: useStores().countryCode,
-  }
-  // useStore((s) => s.oauthdata)
-  // const geolocation = useStore((s) => s.geolocation)
-  const { register, errors, handleSubmit, formState, reset, watch } = useForm({
-    // defaultValues,
-    mode: 'onChange',
-  })
-
-  const { isValid, isDirty } = formState
 
   // console.log(auth.currentUser)
   if (!auth.currentUser)

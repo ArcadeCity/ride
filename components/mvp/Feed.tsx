@@ -25,7 +25,7 @@ function Feed() {
                 There are no posts near <strong>{city}</strong>. You can make the first post!
               </p>
               <p className='mb-8'>
-                Introduce yourself and say if you're looking to give or take rides, or any other
+                Introduce yourself and say if you are re looking to give or take rides, or any other
                 service.
               </p>
             </>
