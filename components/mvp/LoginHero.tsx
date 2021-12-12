@@ -54,7 +54,7 @@ export default function LoginHero() {
                 className='w-full flex items-center justify-center px-2 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-6'
                 onClick={seeNearby}
               >
-                See who's nearby
+                See whos nearby
               </a>
             </div>
           </div>
