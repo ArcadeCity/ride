@@ -1,6 +1,7 @@
 import { Instance, onSnapshot, types } from 'mobx-state-tree'
 import storage from 'localforage'
 import { mst } from 'reactotron-mst'
+import * as actions from './mst-actions'
 
 const Tron =
   typeof window !== 'undefined' ? require('reactotron-react-js').default : { configure: () => {} }
@@ -35,12 +36,17 @@ export const PostModel = types.model({
 
 export const RootStoreModel = types
   .model({
+    coords: types.frozen(),
     posts: types.map(PostModel),
     user: types.maybeNull(TwitterMetadataModel),
   })
   .actions((self) => ({
+    seeNearby: async (): Promise<void> => await actions.seeNearby(self as RootStore),
     addPost(post: Post) {
       self.posts.set(post.id, PostModel.create(post))
+    },
+    setCoords(coords: any) {
+      self.coords = coords
     },
     setUser(user: TwitterMetadata) {
       self.user = user

@@ -8,6 +8,8 @@ export default function Metatags({
   return (
     <Head>
       <title>{title}</title>
+      <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+
       <meta name='twitter:card' content='summary' />
       <meta name='twitter:site' content='@fireship_dev' />
       <meta name='twitter:title' content={title} />
