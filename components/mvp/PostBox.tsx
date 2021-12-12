@@ -3,9 +3,26 @@ import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import Image from 'next/image'
 import { useStores } from '@lib/root-store-context'
+import { signInWithTwitter } from '@lib/twitter'
 
 export default function PostBox() {
   const twitterMetadata = useStores().user
+  if (!twitterMetadata) {
+    return (
+      <div className='flex items-center justify-center space-x-4 m-8 w-full max-w-xl bg-white rounded-xl'>
+        <div className='p-8 text-center'>
+          <p className='mb-6'>Log in with Twitter to post to your local area.</p>
+          <a
+            href='#'
+            className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10'
+            onClick={signInWithTwitter}
+          >
+            Log in with Twitter
+          </a>
+        </div>
+      </div>
+    )
+  }
   const lat = useStores().coords?.lat
   const lng = useStores().coords?.lng
   const geolocation = {
@@ -89,7 +106,7 @@ export default function PostBox() {
 
           <div className='absolute bottom-0 inset-x-0 pl-3 pr-2 py-2 flex justify-between'>
             <div className='flex items-center space-x-5'>
-              {errors.content && <p className='text-red-500'>{errors.content.message}</p>}
+              {errors.content && <p className='text-gray-500'>{errors.content.message}</p>}
               {/* <div className='flex items-center'>
                 <button
                   type='button'

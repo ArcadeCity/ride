@@ -1,7 +1,14 @@
 import PostFeed from '@components/PostFeed'
 import Metatags from '@components/Metatags'
 import Loader from '@components/Loader'
-import { auth, firestore, fromMillis, postToJSON, twitterAuthProvider } from '@lib/firebase'
+import {
+  auth,
+  firestore,
+  fromMillis,
+  postToJSON,
+  queryFirestore,
+  twitterAuthProvider,
+} from '@lib/firebase'
 import { useCallback, useEffect, useState } from 'react'
 import { magic } from '@lib/magic'
 import { useRouter } from 'next/router'
@@ -14,6 +21,7 @@ export default function LoginHero() {
   const seeNearby = useStores().seeNearby
   const lat = useStores().coords?.lat
   const lng = useStores().coords?.lng
+  const store = useStores()
 
   const startSeeNearby = useCallback(async () => {
     if (lat && lng) {
@@ -22,22 +30,9 @@ export default function LoginHero() {
       const perms = await checkLocationPermissions()
       console.log('Location permission:', perms)
     }
+    queryFirestore({ lat, lng }, store)
   }, [lat, lng])
 
-  const signInWithTwitter = useCallback(async (provider) => {
-    setIsLoggingIn(true)
-
-    try {
-      await magic.oauth.loginWithRedirect({
-        provider,
-        redirectURI: new URL('/callback', window.location.origin).href,
-      })
-      // history.push("/");
-    } catch (e) {
-      console.log('failed:', e)
-      setIsLoggingIn(false)
-    }
-  }, [])
   return (
     <div className='fixed flex flex-col h-screen w-screen justify-center items-center'>
       <main className='mx-auto max-w-7xl px-4'>

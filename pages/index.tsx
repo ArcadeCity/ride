@@ -11,6 +11,7 @@ const authRoute = process.env.NODE_ENV === 'production' ? 'auth' : 'authDev'
 export default function HomePage() {
   const [authed, setAuthed] = useState(false)
   const user = useStores().user
+  const posts = useStores().posts
   const twitterMetadata = useStore((s) => s.oauthdata)
   const store = useStores()
   const lat = useStores().coords?.lat
@@ -37,5 +38,6 @@ export default function HomePage() {
     })
   }, [])
 
-  return !!user ? <Feed /> : <LoginHero />
+  // still need to handle no posts
+  return !!posts ? <Feed /> : <LoginHero />
 }

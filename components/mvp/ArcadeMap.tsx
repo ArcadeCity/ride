@@ -9,7 +9,7 @@ export default function ArcadeMap() {
 
   useEffect(() => {
     if (!lat || !lng || !mapView) return
-    console.log(`Let's fly to ${lat}, ${lng}`)
+    console.log(`Looking at ${lat}, ${lng}`)
     ;(async () => {
       mapView.lookAt({
         target: new harp.GeoCoordinates(lat, lng),

@@ -72,6 +72,7 @@ export function postToJSON(doc) {
 // Query viewers' locations from Firestore
 let subscription
 export function queryFirestore(location: any, store: RootStore) {
+  console.log('Querying geofirestore...')
   if (subscription) {
     console.log('Old query subscription cancelled')
     subscription()
