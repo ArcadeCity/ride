@@ -28,10 +28,13 @@ export default function LoginHero() {
   return (
     <div
       className='fixed flex flex-col h-screen w-screen justify-center items-center'
-      style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+      // style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
     >
       <main className='mx-auto max-w-7xl px-4'>
-        <div className='text-center'>
+        <div
+          className='-mt-12 p-20 text-center rounded-xl'
+          style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}
+        >
           <h1 className='text-4xl tracking-tight font-extrabold text-gray-100 sm:text-5xl md:text-6xl'>
             <span className='block xl:inline'>Connect Freely.</span>
           </h1>
