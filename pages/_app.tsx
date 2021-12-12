@@ -20,7 +20,6 @@ function MyApp({ Component, pageProps }) {
     ;(async () => {
       const root = await setupRootStore()
       setRootStore(root)
-      console.log('Set root store.')
     })()
   }, [])
 
