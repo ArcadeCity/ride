@@ -24,8 +24,10 @@ export const seeNearby = async (self: RootStore) => {
       },
       (result) => {
         result.items.forEach((item) => {
-          const pretty = `${item.address.city}, ${item.address.state}, ${item.address.countryCode}`
+          const pretty = `${item.address.city}, ${item.address.state}`
           console.log(pretty)
+          self.setCity(pretty)
+          self.setCountryCode(item.address.countryCode)
         })
       },
       alert

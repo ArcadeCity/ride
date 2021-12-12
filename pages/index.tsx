@@ -14,11 +14,13 @@ export default function HomePage() {
   const user = useStores().user
   const twitterMetadata = useStore((s) => s.oauthdata)
   const store = useStores()
+  const lat = useStores().coords?.lat
+  const lng = useStores().coords?.lng
 
   useEffect(() => {
-    if (!authed) return
-    queryFirestore({ lat: 40.7589, lng: -73.9861 }, store)
-  }, [authed])
+    if (!authed || !lat || !lng) return
+    queryFirestore({ lat, lng }, store)
+  }, [authed, lat, lng])
 
   useEffect(() => {
     // On mount, we check if a user is logged in.

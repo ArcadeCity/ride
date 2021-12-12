@@ -9,6 +9,8 @@ import { magic } from '@lib/magic'
 import { auth } from '@lib/firebase'
 import Image from 'next/image'
 import { useStores } from '@lib/root-store-context'
+import storage from 'localforage'
+import { ROOT_STATE_STORAGE_KEY } from '@lib/mst'
 
 const navigation = [
   // { name: 'Dashboard', href: '#', current: true },
@@ -31,10 +33,13 @@ export default function Navbar() {
   const twitterMetadata = useStore((s) => s.oauthdata)
   const setoauthdata = useStore((s) => s.setoauthdata)
   const setUser = useStores().setUser
+  const reset = useStores().reset
   const authed = !!useStores().user
   const handleLogout = async () => {
     setoauthdata(null)
     setUser(null)
+    reset()
+    storage.removeItem(ROOT_STATE_STORAGE_KEY)
     await magic.user.logout()
     await auth.signOut()
   }

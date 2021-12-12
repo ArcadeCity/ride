@@ -7,7 +7,7 @@ const Tron =
   typeof window !== 'undefined' ? require('reactotron-react-js').default : { configure: () => {} }
 // import Tron from 'reactotron-react-js'
 
-const ROOT_STATE_STORAGE_KEY = 'root'
+export const ROOT_STATE_STORAGE_KEY = 'root2'
 
 export const TwitterMetadataModel = types.model({
   email: '',
@@ -36,7 +36,9 @@ export const PostModel = types.model({
 
 export const RootStoreModel = types
   .model({
+    city: types.maybeNull(types.string),
     coords: types.frozen(),
+    countryCode: types.maybeNull(types.string),
     posts: types.map(PostModel),
     user: types.maybeNull(TwitterMetadataModel),
   })
@@ -45,11 +47,24 @@ export const RootStoreModel = types
     addPost(post: Post) {
       self.posts.set(post.id, PostModel.create(post))
     },
+    setCity(city: string) {
+      self.city = city
+    },
     setCoords(coords: any) {
       self.coords = coords
     },
+    setCountryCode(code: string) {
+      self.countryCode = code
+    },
     setUser(user: TwitterMetadata) {
       self.user = user
+    },
+    reset() {
+      self.user = null
+      // self.city = null
+      // self.coords = null
+      // self.countryCode = null
+      self.posts = undefined
     },
   }))
   .views((self) => ({
