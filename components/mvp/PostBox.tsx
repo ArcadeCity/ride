@@ -14,8 +14,16 @@ import { useStores } from '@lib/root-store-context'
 
 export default function PostBox() {
   const twitterMetadata = useStores().user
+  const lat = useStores().coords.lat
+  const lng = useStores().coords.lng
+  const geolocation = {
+    lat,
+    lng,
+    city: useStores().city,
+    countryCode: useStores().countryCode,
+  }
   // useStore((s) => s.oauthdata)
-  const geolocation = useStore((s) => s.geolocation)
+  // const geolocation = useStore((s) => s.geolocation)
   const { register, errors, handleSubmit, formState, reset, watch } = useForm({
     // defaultValues,
     mode: 'onChange',
@@ -23,6 +31,7 @@ export default function PostBox() {
 
   const { isValid, isDirty } = formState
 
+  // console.log(auth.currentUser)
   if (!auth.currentUser) return <></>
   // if (!auth.currentUser) return <></>
 
@@ -35,14 +44,16 @@ export default function PostBox() {
       content,
       geolocation,
       twitterMetadata,
+      createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
-      coordinates: new GeoPoint(40.7589, -73.9831),
+      coordinates: new GeoPoint(lat, lng),
     })
 
     console.log('auth.currentUser.uid:', auth.currentUser.uid)
     console.log('postId:', docRef.id)
 
-    reset({ content })
+    reset({ content: '' })
+    // content = ''
 
     toast.success('Post submitted successfully!')
   }

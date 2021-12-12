@@ -10,6 +10,7 @@ import { useStore } from '@lib/store'
 import { useEffect, useState } from 'react'
 import { RootStore, setupRootStore } from '@lib/mst'
 import { RootStoreProvider } from '@lib/root-store-context'
+import Metatags from '@components/Metatags'
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData()
@@ -28,7 +29,19 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <script src='https://unpkg.com/three/build/three.min.js' defer></script>
         <script src='https://unpkg.com/@here/harp.gl/dist/harp.js' defer></script>
+        <script
+          src='https://js.api.here.com/v3/3.1/mapsjs-core.js'
+          type='text/javascript'
+          defer
+        ></script>
+        <script
+          src='https://js.api.here.com/v3/3.1/mapsjs-service.js'
+          type='text/javascript'
+          defer
+        ></script>
       </Head>
+
+      <Metatags />
       {!!rootStore && (
         <RootStoreProvider value={rootStore}>
           <UserContext.Provider value={userData}>

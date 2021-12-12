@@ -5,10 +5,12 @@ import { auth, firestore, fromMillis, postToJSON, twitterAuthProvider } from '@l
 import { useCallback, useEffect, useState } from 'react'
 import { magic } from '@lib/magic'
 import { useRouter } from 'next/router'
+import { useStores } from '@lib/root-store-context'
 
 export default function LoginHero() {
   const router = useRouter()
   const [isLoggingIn, setIsLoggingIn] = useState(false)
+  const seeNearby = useStores().seeNearby
   const signInWithTwitter = useCallback(async (provider) => {
     setIsLoggingIn(true)
 
@@ -49,28 +51,12 @@ export default function LoginHero() {
             <div className='mt-3 rounded-md shadow sm:mt-0 sm:ml-3'>
               <a
                 href='#'
-                className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10'
-                onClick={() => router.push('feed')}
+                className='w-full flex items-center justify-center px-2 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-6'
+                onClick={seeNearby}
               >
-                Skip login
+                See whos nearby
               </a>
             </div>
-            {/* <div className='rounded-md shadow'>
-        <a
-          href='#'
-          className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10'
-        >
-          Get started
-        </a>
-      </div>
-      <div className='mt-3 rounded-md shadow sm:mt-0 sm:ml-3'>
-        <a
-          href='#'
-          className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10'
-        >
-          Live demo
-        </a>
-      </div> */}
           </div>
         </div>
       </main>
