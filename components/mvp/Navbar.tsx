@@ -44,7 +44,7 @@ export default function Navbar() {
     await auth.signOut()
   }
   return (
-    <Disclosure as='nav' className='bg-transparent'>
+    <Disclosure as='nav' className='bg-transparent' style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}>
       {({ open }) => (
         <>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>

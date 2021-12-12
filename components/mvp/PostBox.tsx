@@ -50,7 +50,7 @@ export default function PostBox() {
   }
 
   return (
-    <div className='flex items-start space-x-4 m-8 max-w-xl'>
+    <div className='flex items-start space-x-4 m-8 w-full max-w-xl'>
       <div className='flex-shrink-0'>
         {!!twitterMetadata?.profile && (
           <div className='inline-block h-10 w-10 relative'>
