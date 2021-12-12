@@ -65,7 +65,7 @@ export function postToJSON(doc) {
     id: doc.id,
     // Gotcha! firestore timestamp NOT serializable to JSON. Must convert to milliseconds
     // createdAt: data?.createdAt.toMillis() || 0,
-    updatedAt: data?.updatedAt.toMillis() || 0,
+    createdAt: data?.createdAt.toMillis() || 0,
   }
 }
 
@@ -96,7 +96,8 @@ export function queryFirestore(location: any, store: RootStore) {
           store.addPost({
             id: change.doc.id,
             twitterMetadata: data.twitterMetadata,
-            updatedAt: data?.updatedAt?.toMillis() || Date.now(),
+            createdAt: data?.createdAt?.toMillis() || Date.now(),
+            // updatedAt: data?.updatedAt?.toMillis() || Date.now(),
             geolocation: data.geolocation,
             content: data.content,
           })
@@ -110,7 +111,7 @@ export function queryFirestore(location: any, store: RootStore) {
         case 'modified':
           console.log('Snapshot detected modified')
           const data2 = change.doc.data()
-          console.log('data2?', change.doc.data)
+          console.log('data2?', data2)
           // store.addPost({
           //   id: change.doc.id,
           //   twitterMetadata: data2.twitterMetadata,

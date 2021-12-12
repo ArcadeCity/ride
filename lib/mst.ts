@@ -31,7 +31,7 @@ export const PostModel = types.model({
   content: types.optional(types.string, ''),
   geolocation: GeolocationModel,
   twitterMetadata: types.maybeNull(TwitterMetadataModel),
-  updatedAt: types.number,
+  createdAt: types.number,
 })
 
 export const RootStoreModel = types
@@ -72,7 +72,7 @@ export const RootStoreModel = types
       const posts = Array.from(self.posts.values())
       return posts
         .filter((p) => !!p.twitterMetadata)
-        .sort((p1, p2) => (p1.updatedAt > p2.updatedAt ? -1 : 1))
+        .sort((p1, p2) => (p1.createdAt > p2.createdAt ? -1 : 1))
     },
   }))
 
