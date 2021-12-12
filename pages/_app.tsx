@@ -47,10 +47,10 @@ function MyApp({ Component, pageProps }) {
             <Navbar />
             <Component {...pageProps} />
             <Toaster />
+            <ArcadeMap />
           </UserContext.Provider>
         </RootStoreProvider>
       )}
-      <ArcadeMap />
     </>
   )
 }

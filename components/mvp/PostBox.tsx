@@ -6,8 +6,8 @@ import { useStores } from '@lib/root-store-context'
 
 export default function PostBox() {
   const twitterMetadata = useStores().user
-  const lat = useStores().coords.lat
-  const lng = useStores().coords.lng
+  const lat = useStores().coords?.lat
+  const lng = useStores().coords?.lng
   const geolocation = {
     lat,
     lng,
