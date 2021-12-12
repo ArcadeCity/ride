@@ -88,6 +88,7 @@ export function queryFirestore(location: any, store: RootStore) {
 
   console.log('New query subscription created')
   subscription = query.onSnapshot((snapshot) => {
+    store.setShowFeed(true)
     // console.log(snapshot.docChanges())
     snapshot.docChanges().forEach((change) => {
       switch (change.type) {

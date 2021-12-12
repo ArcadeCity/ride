@@ -41,6 +41,7 @@ export const RootStoreModel = types
     countryCode: types.maybeNull(types.string),
     posts: types.map(PostModel),
     user: types.maybeNull(TwitterMetadataModel),
+    showFeed: false,
   })
   .actions((self) => ({
     seeNearby: async (): Promise<void> => await actions.seeNearby(self as RootStore),
@@ -55,6 +56,9 @@ export const RootStoreModel = types
     },
     setCountryCode(code: string) {
       self.countryCode = code
+    },
+    setShowFeed(show: boolean) {
+      self.showFeed = show
     },
     setUser(user: TwitterMetadata) {
       self.user = user

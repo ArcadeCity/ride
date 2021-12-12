@@ -4,9 +4,16 @@ import toast from 'react-hot-toast'
 import Image from 'next/image'
 import { useStores } from '@lib/root-store-context'
 import { signInWithTwitter } from '@lib/twitter'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { useContext } from 'react'
+import { UserContext } from '@lib/context'
 
 export default function PostBox() {
   const twitterMetadata = useStores().user
+  const { user, username } = useContext(UserContext)
+  // console.log('user:', user)
+  // console.log('authState:', authState)
+
   if (!twitterMetadata) {
     return (
       <div className='flex items-center justify-center space-x-4 m-8 w-full max-w-xl bg-white rounded-xl'>
@@ -41,7 +48,14 @@ export default function PostBox() {
   const { isValid, isDirty } = formState
 
   // console.log(auth.currentUser)
-  if (!auth.currentUser) return <></>
+  if (!auth.currentUser)
+    return (
+      <div className='flex items-center justify-center space-x-4 m-8 w-full max-w-xl bg-white rounded-xl'>
+        <div className='p-8 text-center'>
+          <p className='mb-6'>Authenticating...</p>
+        </div>
+      </div>
+    )
   // if (!auth.currentUser) return <></>
 
   const postsCollection = GeoFirestore.collection('users')

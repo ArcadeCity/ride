@@ -33,6 +33,7 @@ export default function Navbar() {
   const twitterMetadata = useStore((s) => s.oauthdata)
   const setoauthdata = useStore((s) => s.setoauthdata)
   const setUser = useStores().setUser
+  const setShowFeed = useStores().setShowFeed
   const reset = useStores().reset
   const authed = !!useStores().user
   const handleLogout = async () => {
@@ -40,6 +41,7 @@ export default function Navbar() {
     setUser(null)
     reset()
     storage.removeItem(ROOT_STATE_STORAGE_KEY)
+    setShowFeed(false)
     await magic.user.logout()
     await auth.signOut()
   }
