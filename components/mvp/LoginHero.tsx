@@ -1,37 +1,45 @@
 import PostFeed from '@components/PostFeed'
 import Metatags from '@components/Metatags'
 import Loader from '@components/Loader'
-import { auth, firestore, fromMillis, postToJSON, twitterAuthProvider } from '@lib/firebase'
+import {
+  auth,
+  firestore,
+  fromMillis,
+  postToJSON,
+  queryFirestore,
+  twitterAuthProvider,
+} from '@lib/firebase'
 import { useCallback, useEffect, useState } from 'react'
-import { magic } from '@lib/magic'
+
 import { useRouter } from 'next/router'
 import { useStores } from '@lib/root-store-context'
+import { checkLocationPermissions } from '@lib/location'
 
 export default function LoginHero() {
   const router = useRouter()
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const seeNearby = useStores().seeNearby
-  const signInWithTwitter = useCallback(async (provider) => {
-    setIsLoggingIn(true)
+  const lat = useStores().coords?.lat
+  const lng = useStores().coords?.lng
+  const store = useStores()
 
-    try {
-      await magic.oauth.loginWithRedirect({
-        provider,
-        redirectURI: new URL('/callback', window.location.origin).href,
-      })
-      // history.push("/");
-    } catch (e) {
-      console.log('failed:', e)
-      setIsLoggingIn(false)
+  const startSeeNearby = useCallback(async () => {
+    if (lat && lng) {
+      console.log(`Using existing lat/lng: ${lat}, ${lng}`)
+    } else {
+      const perms = await checkLocationPermissions()
+      console.log('Location permission:', perms)
     }
-  }, [])
+    queryFirestore({ lat, lng }, store)
+  }, [lat, lng])
+
   return (
-    <div
-      className='flex flex-col h-screen w-screen justify-center items-center'
-      style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
-    >
+    <div className='fixed flex flex-col h-screen w-screen justify-center items-center'>
       <main className='mx-auto max-w-7xl px-4'>
-        <div className='text-center'>
+        <div
+          className='-mt-12 px-16 text-center rounded-xl h-96 flex flex-col justify-center'
+          style={{ backgroundColor: 'rgba(0,0,0,0.75)' }}
+        >
           <h1 className='text-4xl tracking-tight font-extrabold text-gray-100 sm:text-5xl md:text-6xl'>
             <span className='block xl:inline'>Connect Freely.</span>
           </h1>
@@ -40,6 +48,15 @@ export default function LoginHero() {
           </p>
           <div className='mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8'>
             <div className='rounded-md shadow'>
+              <a
+                href='#'
+                className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10'
+                onClick={startSeeNearby}
+              >
+                See who&apos;s nearby
+              </a>
+            </div>
+            {/* <div className='rounded-md shadow'>
               <a
                 href='#'
                 className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10'
@@ -56,7 +73,7 @@ export default function LoginHero() {
               >
                 See whos nearby
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>

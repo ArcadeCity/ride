@@ -1,6 +1,24 @@
+import { useStores } from '@lib/root-store-context'
 import { useEffect } from 'react'
 
+let mapView
+
 export default function ArcadeMap() {
+  const lat = useStores().coords?.lat
+  const lng = useStores().coords?.lng
+
+  useEffect(() => {
+    if (!lat || !lng || !mapView) return
+    console.log(`Looking at ${lat}, ${lng}`)
+    ;(async () => {
+      mapView.lookAt({
+        target: new harp.GeoCoordinates(lat, lng),
+        zoomLevel: 16.5,
+        tilt: 40,
+      })
+    })()
+  }, [lat, lng, mapView])
+
   let harp
   if (typeof window !== 'undefined') {
     // @ts-ignore
@@ -12,7 +30,7 @@ export default function ArcadeMap() {
   useEffect(() => {
     const canvas = document.getElementById('map')
     if (!harp) return
-    const mapView = new harp.MapView({
+    mapView = new harp.MapView({
       canvas,
       theme: 'resources/arcade.json',
     })

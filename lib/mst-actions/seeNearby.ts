@@ -1,7 +1,8 @@
 import { RootStore } from '@lib/mst'
 
 const platform =
-  typeof window !== 'undefined'
+  // @ts-ignore
+  typeof window !== 'undefined' && !!window.H
     ? // @ts-ignore
       new window.H.service.Platform({
         app_id: 'mxdAQmPG6AhYZPlkir9f',

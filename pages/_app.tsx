@@ -1,4 +1,4 @@
-// import '@styles/globals.css'
+import '@styles/globals.css'
 import 'tailwindcss/tailwind.css'
 import Navbar from '@components/mvp/Navbar'
 import { UserContext } from '@lib/context'
@@ -20,7 +20,6 @@ function MyApp({ Component, pageProps }) {
     ;(async () => {
       const root = await setupRootStore()
       setRootStore(root)
-      console.log('Set root store.')
     })()
   }, [])
 
@@ -40,7 +39,6 @@ function MyApp({ Component, pageProps }) {
           defer
         ></script>
       </Head>
-
       <Metatags />
       {!!rootStore && (
         <RootStoreProvider value={rootStore}>
@@ -48,10 +46,10 @@ function MyApp({ Component, pageProps }) {
             <Navbar />
             <Component {...pageProps} />
             <Toaster />
+            <ArcadeMap />
           </UserContext.Provider>
         </RootStoreProvider>
       )}
-      <ArcadeMap />
     </>
   )
 }

@@ -33,6 +33,7 @@ export default function Navbar() {
   const twitterMetadata = useStore((s) => s.oauthdata)
   const setoauthdata = useStore((s) => s.setoauthdata)
   const setUser = useStores().setUser
+  const setShowFeed = useStores().setShowFeed
   const reset = useStores().reset
   const authed = !!useStores().user
   const handleLogout = async () => {
@@ -40,11 +41,12 @@ export default function Navbar() {
     setUser(null)
     reset()
     storage.removeItem(ROOT_STATE_STORAGE_KEY)
+    setShowFeed(false)
     await magic.user.logout()
     await auth.signOut()
   }
   return (
-    <Disclosure as='nav' className='bg-transparent'>
+    <Disclosure as='nav' className='bg-transparent' style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}>
       {({ open }) => (
         <>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
