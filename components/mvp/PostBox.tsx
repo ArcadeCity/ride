@@ -31,7 +31,7 @@ export default function PostBox() {
 
   const { isValid, isDirty } = formState
 
-  console.log(auth.currentUser)
+  // console.log(auth.currentUser)
   if (!auth.currentUser) return <></>
   // if (!auth.currentUser) return <></>
 
@@ -52,7 +52,8 @@ export default function PostBox() {
     console.log('auth.currentUser.uid:', auth.currentUser.uid)
     console.log('postId:', docRef.id)
 
-    reset({ content })
+    reset({ content: '' })
+    // content = ''
 
     toast.success('Post submitted successfully!')
   }
