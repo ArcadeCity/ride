@@ -1,12 +1,4 @@
-import {
-  auth,
-  firestore,
-  GeoFirestore,
-  GeoPoint,
-  postsGeocollection,
-  serverTimestamp,
-} from '@lib/firebase'
-import { useStore } from '@lib/store'
+import { auth, GeoFirestore, GeoPoint, serverTimestamp } from '@lib/firebase'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import Image from 'next/image'
@@ -49,11 +41,10 @@ export default function PostBox() {
       coordinates: new GeoPoint(lat, lng),
     })
 
-    console.log('auth.currentUser.uid:', auth.currentUser.uid)
-    console.log('postId:', docRef.id)
+    // console.log('auth.currentUser.uid:', auth.currentUser.uid)
+    // console.log('postId:', docRef.id)
 
     reset({ content: '' })
-    // content = ''
 
     toast.success('Post submitted successfully!')
   }
