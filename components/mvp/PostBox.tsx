@@ -11,6 +11,7 @@ import { UserContext } from '@lib/context'
 export default function PostBox() {
   const twitterMetadata = useStores().user
   const { user, username } = useContext(UserContext)
+  const city = useStores().city
   // console.log('user:', user)
   // console.log('authState:', authState)
 
@@ -37,7 +38,9 @@ export default function PostBox() {
     return (
       <div className='flex items-center justify-center space-x-4 m-8 w-full max-w-xl bg-white rounded-xl'>
         <div className='p-8 text-center'>
-          <p className='mb-6'>Log in with Twitter to post to your local area.</p>
+          <p className='mb-6'>
+            Log in with Twitter to post for users near <strong>{city}</strong>.
+          </p>
           <a
             href='#'
             className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10'
