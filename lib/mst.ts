@@ -7,7 +7,7 @@ const Tron =
   typeof window !== 'undefined' ? require('reactotron-react-js').default : { configure: () => {} }
 // import Tron from 'reactotron-react-js'
 
-export const ROOT_STATE_STORAGE_KEY = 'root2'
+export const ROOT_STATE_STORAGE_KEY = 'root7'
 
 export const TwitterMetadataModel = types.model({
   email: '',
@@ -104,7 +104,7 @@ export async function setupRootStore() {
     // __DEV__ && console.tron.error(e.message, null)
   }
 
-  if (typeof window !== 'undefined') {
+  if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
     Tron.configure({
       name: 'Ride',
       port: 9090,
