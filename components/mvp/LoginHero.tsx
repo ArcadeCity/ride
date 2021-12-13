@@ -17,6 +17,7 @@ import { checkLocationPermissions } from '@lib/location'
 
 export default function LoginHero() {
   const router = useRouter()
+  const [buttonText, setButtonText] = useState("See who's nearby")
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const seeNearby = useStores().seeNearby
   const lat = useStores().coords?.lat
@@ -25,10 +26,22 @@ export default function LoginHero() {
 
   const startSeeNearby = useCallback(async () => {
     if (lat && lng) {
-      console.log(`Using existing lat/lng: ${lat}, ${lng}`)
+      console.log(`Using lat/lng: ${lat}, ${lng}`)
     } else {
       const perms = await checkLocationPermissions()
       console.log('Location permission:', perms)
+      switch (perms) {
+        case 'granted':
+        case 'prompt': {
+          setButtonText('Waiting for location...')
+          await seeNearby()
+          break
+        }
+        case 'denied': {
+          alert('Location permissions denied. Allow location to see posts from people near you.')
+          return
+        }
+      }
     }
     queryFirestore({ lat, lng }, store)
   }, [lat, lng])
@@ -53,9 +66,13 @@ export default function LoginHero() {
                 className='w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10'
                 onClick={startSeeNearby}
               >
-                See who&apos;s nearby
+                {buttonText}
               </a>
+              {buttonText === 'Waiting for location...' && (
+                <p className='mt-4 text-gray-500'>This may take a few seconds</p>
+              )}
             </div>
+
             {/* <div className='rounded-md shadow'>
               <a
                 href='#'
