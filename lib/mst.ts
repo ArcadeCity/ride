@@ -104,7 +104,7 @@ export async function setupRootStore() {
     // __DEV__ && console.tron.error(e.message, null)
   }
 
-  if (typeof window !== 'undefined') {
+  if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
     Tron.configure({
       name: 'Ride',
       port: 9090,
