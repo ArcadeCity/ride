@@ -1,3 +1,4 @@
+import { queryFirestore } from '@lib/firebase'
 import { RootStore } from '@lib/mst'
 
 const platform =
@@ -30,6 +31,7 @@ export const seeNearby = async (self: RootStore) => {
           self.setCity(pretty)
           self.setCountryCode(item.address.countryCode)
           self.setShowFeed(true)
+          queryFirestore({ lat: approxLatitude, lng: approxLongitude }, self)
         })
       },
       alert
