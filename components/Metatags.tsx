@@ -2,8 +2,8 @@ import Head from 'next/head'
 
 export default function Metatags({
   title = 'Arcade City',
-  description = 'Peer-to-peer rides and whatever you want',
-  image = 'https://fireship.io/courses/react-next-firebase/img/featured.png',
+  description = 'Peer-to-peer rides and more. Connect freely!',
+  image = 'https://images.squarespace-cdn.com/content/v1/619035e2bc35c369ff9b1d15/ac86791a-247a-42cc-8d5b-11c9a77f0c2c/ride3d.jpg?format=2500w',
 }) {
   return (
     <Head>
